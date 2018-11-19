@@ -1,0 +1,46 @@
+<!-- -->
+<launch>
+  <arg name="name"  default="box"/>
+  <arg name="x"     default="0.0"/>
+  <arg name="y"     default="0.0"/>
+  <arg name="z"     default="0.0"/>
+  <arg name="yaw"   default="0.0"/>
+  <arg name="length" default="1.0"/>
+  <arg name="width"  default="1.0"/>
+  <arg name="height" default="2.0"/>
+  <arg name="model" default="$(find iri_objects_description)/urdf/box/box.xacro"/>
+
+  <param name="$(arg name)_description" command="$(find xacro)/xacro.py '$(arg model)' name:=$(arg name) length:=$(arg length) width:=$(arg width) height:=$(arg height)" />
+
+  <node name="$(arg name)_state_publisher"
+        pkg ="robot_state_publisher"
+        type="robot_state_publisher">
+    <param name="tf_prefix" value="/$(arg name)" type="str" />
+    <remap from="robot_description" to="$(arg name)_description" />
+    <remap from="/joint_states" to="/$(arg name)/joint_states" />
+  </node>
+  
+  <node name="spawn_urdf_$(arg name)"
+        pkg ="gazebo_ros" 
+        type="spawn_model"
+        args="-param /$(arg name)_description -urdf -model $(arg name) -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)">
+  </node>
+
+  <node name="$(arg name)_fake_localization"
+        pkg ="fake_localization"
+        type="fake_localization">
+    <param name="odom_frame_id"   value="$(arg name)/odom" />
+    <param name="global_frame_id" value="map" />
+    <param name="base_frame_id"   value="$(arg name)/base_footprint" />
+    <param name="delta_x"   value="0.0" />
+    <param name="delta_y"   value="0.0" />
+    <param name="delta_yaw" value="0.0" />
+    <remap from="base_pose_ground_truth" 
+             to="/$(arg name)/odom"/>
+    <remap from="initialpose" 
+             to="/$(arg name)/initialpose"/>
+    <remap from="amcl_pose" 
+             to="/$(arg name)/amcl_pose"/>
+  </node>
+
+</launch>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/diff_platform/include/platform.xacro" />
+
+  <xacro:diff_platform name="robot"/>
+  
+  <xacro:include filename="$(find iri_objects_description)/urdf/laser/include/laser.xacro" />
+  <xacro:laser parent="base_footprint" 
+               name="laser" 
+               prefix="$(arg name)"
+               rate="5.5"
+               points="400"
+               angle_min="-${PI}"
+               angle_max="${PI}"
+               range_min="0.15"
+               range_max="6.0">
+    <origin xyz="0.0 0 0.5" rpy="0 0 0"/>
+  </xacro:laser>
+
+</robot>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot name="$(arg name)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/transport_platform/urdf.urdf" />
+  <xacro:platform_urdf/>
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/transport_platform/gazebo.gazebo" />
+  <xacro:platform_gazebo/>
+  
+  <xacro:include filename="$(find iri_objects_description)/urdf/tag/tag.xacro" />
+  <xacro:tag parent="base_link" prefix="$(arg name)" tag_name="center" tag_id="95"  tag_size="0.065">
+    <origin xyz="-0.4 0 0.4" rpy="${M_PI} ${-M_PI/2.0} 0"/>
+  </xacro:tag>
+  
+  <xacro:tag parent="base_link" prefix="$(arg name)" tag_name="left" tag_id="66" tag_size="0.065">
+    <origin xyz="-0.4 -0.5 0.4" rpy="${M_PI} ${-M_PI/2.0} 0"/>
+  </xacro:tag>
+  
+  <xacro:tag parent="base_link" prefix="$(arg name)" tag_name="right" tag_id="41" tag_size="0.065">
+    <origin xyz="-0.4 0.5 0.4" rpy="${M_PI} ${-M_PI/2.0} 0"/>
+  </xacro:tag>
+
+</robot>

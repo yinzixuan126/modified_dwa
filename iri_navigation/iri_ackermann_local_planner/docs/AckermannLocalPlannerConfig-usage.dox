@@ -1,0 +1,29 @@
+\subsubsection usage Usage
+\verbatim
+<node name="AckermannLocalPlannerAlgorithm" pkg="iri_ackermann_local_planner" type="AckermannLocalPlannerAlgorithm">
+  <param name="ack_vel_max" type="double" value="0.3" />
+  <param name="ack_vel_min" type="double" value="-0.3" />
+  <param name="ack_acc_max" type="double" value="1.0" />
+  <param name="ack_steer_angle_max" type="double" value="0.45" />
+  <param name="ack_steer_angle_min" type="double" value="-0.45" />
+  <param name="ack_steer_speed_max" type="double" value="1.0" />
+  <param name="ack_steer_speed_min" type="double" value="-1.0" />
+  <param name="ack_steer_acc_max" type="double" value="0.36" />
+  <param name="ack_axis_distance" type="double" value="1.65" />
+  <param name="sim_time" type="double" value="10.0" />
+  <param name="sim_granularity" type="double" value="0.025" />
+  <param name="pdist_scale" type="double" value="0.6" />
+  <param name="gdist_scale" type="double" value="0.8" />
+  <param name="occdist_scale" type="double" value="0.01" />
+  <param name="hdiff_scale" type="double" value="1.0" />
+  <param name="heading_points" type="int" value="8" />
+  <param name="vx_samples" type="int" value="20" />
+  <param name="vtheta_samples" type="int" value="20" />
+  <param name="simple_attractor" type="bool" value="False" />
+  <param name="angular_sim_granularity" type="double" value="0.025" />
+  <param name="xy_goal_tolerance" type="double" value="0.5" />
+  <param name="heading_goal_tolerance" type="double" value="0.1" />
+  <param name="restore_defaults" type="bool" value="False" />
+</node>
+\endverbatim
+

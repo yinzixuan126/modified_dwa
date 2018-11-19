@@ -1,0 +1,256 @@
+<!-- -->
+<launch>
+
+<param name="use_sim_time" value="true"/>
+
+    <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args=" --clock --pause -l $(find iri_akp_local_planner_companion)/rosbags/rosbags_buenos_ICRA_y_IROS2018/g5/2017-09-14-11-24-53.bag"/> 
+
+<!-- Rosbags akp_companion!!! (paper IROS2017) -->
+<!--
+
+
+g1 => encuentro, sin obst, ni personas.
+
+ 1) video: DSC_2611, results_robot4.txt
+
+  rosbag: /rosbags/g1/2017-09-13-10-23-46.bag (NO rviz)
+
+ 2) video: DSC_2609, results_robot2.txt
+
+  rosbag: /rosbags/g1/2017-09-13-10-17-19.bag (good rviz)
+
+
+g2=> encuentro, con obst personas.
+
+ 1) video: DSC_2616, results_robotX.txt
+
+  rosbag: /rosbags/g2/2017-09-13-10-50-47.bag (rviz pasable)
+
+ 2) video: DSC_2621, results_robotX.txt (con la chica de fuera)
+
+  rosbag: /rosbags/g2/2017-09-13-11-15-04.bag (rviz ok, solo necesita algun corte y no muy persudicial)
+
+ 3) video: DSC_2622, results_robotX.txt
+
+  rosbag: /rosbags/g2/2017-09-13-11-26-20.bag
+
+
+g5=> encuentro, con obst staticos.
+
+ 1) video: DSC_2641, results_robot5.txt
+
+rosbag: /rosbags/g5/2017-09-14-11-24-53.bag  [regular]  (si veo que este no acaba de verse bien, el anterior tambien estaba bastante bien: 2017-09-14-11-20-27.bag)
+
+ 2) video: DSC_2640, results_robot4.txt
+
+rosbag: /rosbags/g5/2017-09-14-11-20-27.bag 
+
+poner para captura, imagenes imagen real + rviz:2017-09-14-11-04-17.bag
+-->
+   
+
+  <arg name="map" default="2" />
+
+  <!-- load robot defined machines -->
+
+  <include file="$(find tibi_dabo_base)/machines/$(optenv ROBOT tibi)_$(env ROS_MODE).machines" />
+  <rosparam command="delete" ns="/$(optenv ROBOT tibi)/move_base" />
+
+
+<!-- roslaunch iri_akp_local_planner_companion model_robot_company.launch -->
+ <include file="$(find iri_akp_local_planner_companion)/launch/model_robot_company.launch"/>
+
+ <group ns="$(optenv ROBOT tibi)"> 
+
+ <!-- People Tracking MHT (remap) -->
+    <!-- published topics:  /$(env ROBOT)/mht/tracks -->
+    <!-- subscribed topics: /$(env ROBOT)/detections -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+  <!-- <node pkg ="iri_people_tracking_mht"
+        type="iri_people_tracking_mht"
+        name="mht_2"      
+      output="screen"> -->
+   <!-- <remap from="/mht_2/detections"
+              to="/lpd_2/peopleMapFiltered" />   -->
+   <!--  <remap from="~detections"
+              to="/$(optenv ROBOT tibi)/lpmf2/peopleMapFiltered" />         
+    <remap from="~odom"
+              to="/$(optenv ROBOT tibi)/segway/odom" />
+    <remap from="~odom_for_medium_velocity"
+              to="/$(optenv ROBOT tibi)/segway/odom" />
+      <param name="~/frame_id"               type="string" value="/map" />
+      <param name="local_tracker"            type="bool"   value="false"/>
+      <param name="~/association_threshold"  type="double" value="2.0" />
+      <param name="~/confirmation_threshold" type="double" value="0.9" />
+      <param name="~/deletion_threshold"     type="double" value="0.4" />
+      <param name="~/laser_probability"      type="double" value="0.9" />
+      <param name="~/laser_false_alarm"      type="double" value="0.1" />
+      <param name="~/laser_new_track"        type="double" value="0.11" />
+      <param name="~/laser_no_detection"     type="double" value="0.99" />
+      <param name="~/laser_no_confirmed"     type="double" value="0.02" />
+      <param name="~/laser_no_confirmed_iteration" type="double" value="0.01" />
+      <param name="~/augment_covariance_track"     type="double" value="0.15" />
+      <param name="~/id_markers"       type="bool" value="True" />
+      <param name="~/vel_markers"      type="bool" value="True" />
+      <param name="~/cov_markers"      type="bool" value="True" />
+      <param name="~/covdet_markers"   type="bool" value="False" />
+      <param name="~/covpred_markers"  type="bool" value="False" />
+      <param name="~/clust_markers"    type="bool" value="False" />
+      <param name="~/cov_markers_head" type="bool" value="False" />
+      <param name="~/cov_markers_arm1" type="bool" value="False" />
+      <param name="~/cov_markers_arm2" type="bool" value="False" />
+			<param name="~/track_path_markers" type="bool" value="False" /> 
+  </node> -->
+
+
+ <!-- Front Laser People Detector (remap)  -->
+      <!-- published topics:  /$(env ROBOT)/people -->
+      <!-- subscribed topics: /$(env ROBOT)/sensors/front_laser_scan -->
+      <!-- service clients: -->
+      <!-- service servers: -->
+      <!-- action clients: -->
+      <!-- action servers: -->
+   <!--  <node pkg ="iri_laser_people_detection"
+          type="iri_laser_people_detection"
+          name="lpd_front2"
+          machine="nav">
+      <param name="~rangeThreshold"     type="double" value="0.0" />
+      <param name="~detectionThreshold" type="double" value="-0.05" />
+      <param name="~boostFilePath"      type="string" value="/usr/local/include/iridrivers/boostData/boostFile.txt" />
+      <param name="~boostFilePath2"     type="string" value="/usr/local/include/iridrivers/boostData/boostFile2.txt" />
+      <param name="~selectPosesFrame"   type="bool"   value="True" />
+      <param name="~posesFrame"         type="string" value="/map" />
+      <param name="~selectScanFrame"    type="bool"   value="False" />
+      <param name="~scanFrame"          type="string" value="/$(env ROBOT)/front_laser" />
+      <param name="~markerWidth"        type="double" value="0.7" />
+      <param name="~markerHeight"       type="double" value="0.5" />
+      <param name="~markerR"            type="double" value="1.0" />
+      <param name="~markerG"            type="double" value="0.0" />
+      <param name="~markerB"            type="double" value="0.0" />
+      <param name="~markerA"            type="double" value="0.5" />
+      <param name="~filterPosesMode"    type="bool"   value="False" />
+      <param name="~filterR"            type="double" value="0.0" />
+      <param name="~filterX"            type="double" value="0.0" />
+      <param name="~filterY"            type="double" value="0.0" />
+      <remap from="~scan"
+               to="/$(optenv ROBOT tibi)/sensors/front_laser_scan" />
+      <remap from="~people"
+               to="/$(optenv ROBOT tibi)/lpd_2/people" />
+    </node> -->
+
+    <!-- Rear Laser People Detector (remap)-->
+      <!-- published topics:  /$(env ROBOT)/people -->
+      <!-- subscribed topics: /$(env ROBOT)/sensors/rear_laser_scan -->
+      <!-- service clients: -->
+      <!-- service servers: -->
+      <!-- action clients: -->
+      <!-- action servers: -->
+   <!--  <node pkg ="iri_laser_people_detection"
+          type="iri_laser_people_detection"
+          name="lpd_rear2"
+          machine="nav">
+      <param name="~/rangeThreshold"     type="double" value="0.0" />
+      <param name="~/detectionThreshold" type="double" value="-0.05" />
+      <param name="~/boostFilePath"      type="string" value="/usr/local/include/iridrivers/boostData/boostFile.txt" />
+      <param name="~/boostFilePath2"     type="string" value="/usr/local/include/iridrivers/boostData/boostFile2.txt" />
+      <param name="~/selectPosesFrame"   type="bool"   value="True" />
+      <param name="~/posesFrame"         type="string" value="/map" />
+      <param name="~/selectScanFrame"    type="bool"   value="False" />
+      <param name="~/scanFrame"          type="string" value="/$(env ROBOT)/rear_laser" />
+      <param name="~/markerWidth"        type="double" value="0.7" />
+      <param name="~/markerHeight"       type="double" value="0.5" />
+      <param name="~/markerR"            type="double" value="1.0" />
+      <param name="~/markerG"            type="double" value="0.0" />
+      <param name="~/markerB"            type="double" value="0.0" />
+      <param name="~/markerA"            type="double" value="0.5" />
+      <param name="~/filterPosesMode"    type="bool"   value="False" />
+      <param name="~/filterR"            type="double" value="0.0" />
+      <param name="~/filterX"            type="double" value="0.0" />
+      <param name="~/filterY"            type="double" value="0.0" />
+      <remap from="~scan"
+               to="/$(optenv ROBOT tibi)/sensors/rear_laser_scan" />
+      <remap from="~people"
+               to="/$(optenv ROBOT tibi)/lpd_2/people" />
+    </node> -->
+
+
+
+  <!-- Laser People map Filter -->
+    <!-- published topics:  /$(env ROBOT)/peopleFiltered -->
+    <!-- subscribed topics: /$(env ROBOT)/people -->
+    <!--                    /$(env ROBOT)map -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+    <!-- <node pkg ="iri_laser_people_map_filter"
+          type="iri_laser_people_map_filter"
+          name="lpmf2"
+          machine="nav">
+      <param name="~/neighborRadius"   type="double" value="0.5" />
+      <param name="~/markerWidth"      type="double" value="0.7" />
+      <param name="~/markerHeight"     type="double" value="1.5" />
+      <param name="~/markerR"          type="double" value="1.0" />
+      <param name="~/markerG"          type="double" value="1.0" />
+      <param name="~/markerB"          type="double" value="0.0" />
+      <param name="~/markerA"          type="double" value="0.9" />
+      <param name="~/markerLifeTime"   type="double" value="0.1" />
+      <remap from="~people"
+               to="/$(optenv ROBOT tibi)/lpd_2/people" />
+      <remap from="~peopleFiltered"
+               to="/$(optenv ROBOT tibi)/lpmf2/peopleMapFiltered" />
+      <remap from="~map"
+               to="/$(optenv ROBOT tibi)/map" />
+    </node> -->
+  
+
+
+<!-- iri_akp_local_planner_companion (remap) -->
+    <!--launch-prefix="xterm -e ddd -args" -->
+     <node pkg ="move_base"
+          type="move_base"
+          name="move_base2"
+          machine="nav"
+          output="screen">
+      <remap from="/$(optenv ROBOT tibi)/cmd_vel"
+              to="/$(optenv ROBOT tibi)/navigation/cmd_vel2" />
+      <remap from="/$(optenv ROBOT tibi)/odom"
+              to="/$(optenv ROBOT tibi)/segway/odom" />
+      <remap from="/$(optenv ROBOT tibi)/front_scan"
+              to="/$(optenv ROBOT tibi)/sensors/front_laser_scan" />
+      <remap from="/$(optenv ROBOT tibi)/rear_scan"
+              to="/$(optenv ROBOT tibi)/sensors/rear_laser_scan" /> 
+      <remap from="/$(optenv ROBOT tibi)/tracks"
+               to="/$(optenv ROBOT tibi)/mht/tracks" /> 
+      <!-- <remap from="/$(optenv ROBOT tibi)/tracks"
+               to="/$(optenv ROBOT tibi)/mht_2/tracks" /> -->
+         <remap from="/$(optenv ROBOT tibi)/move_base2/goal"
+               to="/$(optenv ROBOT tibi)/move_base/goal" /> -
+      <remap from="/$(optenv ROBOT tibi)/planner_markers"
+               to="/$(optenv ROBOT tibi)/planner_markers2" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/move_base_params.yaml"      command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/local_costmap_params.yaml"  command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/akp_local_planner_params.yaml" command="load" /> 
+      <!--<param name="AkpLocalPlanner/force_map_path"       value="$(find iri_akp_local_planner)/maps/$(arg map)_forces.txt" />-->
+      <param name="AkpLocalPlanner/destination_map_path" value="$(find iri_akp_local_planner_companion)/maps/fme_open_destinations.txt" />
+      <param name="AkpLocalPlanner/results_filename" value="$(env HOME)/iri-lab/labrobotica/restricted/algorithms/people_prediction/branches/ely_people_prediction_companion_robot/data_results/results_robot.txt" />
+      <param name="AkpLocalPlanner/debug_filename" value="$(env HOME)/iri-lab/labrobotica/restricted/algorithms/people_prediction/branches/ely_people_prediction_companion_robot/data_results/debug_robot.txt" />
+      <param name="AkpLocalPlanner/robot" value="$(optenv ROBOT tibi)"/>
+    </node> 
+
+  </group>
+
+
+ <node name="rviz" pkg="rviz" type="rviz" args="-d $(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi).rviz" />
+
+
+</launch>

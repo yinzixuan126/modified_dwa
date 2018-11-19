@@ -1,0 +1,19 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="empty"/>
+
+    <node pkg ="iri_people_simulation"
+          type="iri_people_simulation"
+          name="people_simulation"
+          output="screen">
+      <param name="number_persons" value="1"/>
+      <param name="vis_mode"       value="True"/>
+      <param name="robot"          value="$(optenv ROBOT tibi)" />
+      <param name="destination_map_path" value="$(find iri_akp_local_planner)/maps/$(arg map)_destinations.txt" />
+      <!-- TODO change map with arg -->
+      <remap from="~tracks"        to="/$(optenv ROBOT tibi)/mht/tracks"/>
+      <remap from="~tracksMarkers" to="/$(optenv ROBOT tibi)/mht/tracksMarkers"/>
+    </node>
+
+</launch>

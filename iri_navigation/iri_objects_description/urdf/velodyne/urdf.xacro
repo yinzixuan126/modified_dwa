@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:property name="WIDTH"  value="0.2" />
+  <xacro:property name="HEIGHT" value="1.3" />
+
+    <link name="base_footprint">
+      <inertial>
+        <mass value="1" />
+        <origin xyz="0 0 0" />
+        <inertia 
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0" 
+          izz="1.0" />
+      </inertial>
+      <collision>
+        <origin xyz="0 0 ${HEIGHT/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${WIDTH} ${WIDTH} ${HEIGHT}"/>
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 ${HEIGHT/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${WIDTH} ${WIDTH} ${HEIGHT}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+    </link>
+
+    <link name="base_link">
+    </link>
+    
+    <joint name="base_footprint_to_base_link" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="top"/>
+    
+    <joint name="base_link_to_top" type="fixed">
+      <parent link="base_link"/>
+      <child link="top"/>
+      <origin xyz="0 0 ${HEIGHT}" rpy="0 0 0"/>
+    </joint>
+
+</root>

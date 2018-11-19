@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:property name="LONG"   value="15.0" />
+  <xacro:property name="WIDTH"  value="2.4" />
+  <xacro:property name="HEIGHT" value="4.0" />
+  
+  <xacro:property name="BASE_LINK_HEIGHT" value="1.0" />
+
+    <link name="base_footprint"/>
+
+    <link name="base_link">
+      <inertial>
+        <mass value="1" />
+        <origin xyz="0 0 0" />
+        <inertia 
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0" 
+          izz="1.0" />
+       </inertial>
+    </link>
+    
+    <joint name="base_footprint_to_base_link" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin xyz="0 0 ${BASE_LINK_HEIGHT}" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="body">
+      <collision>
+        <origin xyz="0 0 -${BASE_LINK_HEIGHT}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iri_objects_description/meshes/truck.stl"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 -${BASE_LINK_HEIGHT}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iri_objects_description/meshes/truck.stl"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+    </link>
+    
+    <joint name="base_link_to_body" type="fixed">
+      <parent link="base_link"/>
+      <child link="body"/>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="top"/>
+    
+    <joint name="base_link_to_top" type="fixed">
+      <parent link="base_link"/>
+      <child link="top"/>
+      <origin xyz="0 0 ${HEIGHT-BASE_LINK_HEIGHT}" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="front"/>
+    
+    <joint name="base_link_to_front" type="fixed">
+      <parent link="base_link"/>
+      <child link="front"/>
+      <origin xyz="${LONG/2.0} 0 0" rpy="0 0 0"/>
+    </joint>
+    
+    <link name="back"/>
+    
+    <joint name="base_link_to_back" type="fixed">
+      <parent link="base_link"/>
+      <child link="back"/>
+      <origin xyz="-${LONG/2.0} 0 0" rpy="0 0 ${M_PI}"/>
+    </joint>
+
+</root>

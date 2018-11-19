@@ -1,0 +1,28 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~ack_vel_max" : \b [double] maximum translational speed min: 0.0, default: 0.3, max: 20.0
+- \b "~ack_vel_min" : \b [double] minimum translational speed min: -20.0, default: -0.3, max: 0.0
+- \b "~ack_acc_max" : \b [double] maximum translational acceleration min: 0.0, default: 1.0, max: 20.0
+- \b "~ack_steer_angle_max" : \b [double] maximum steer angle min: 0.0, default: 0.45, max: 0.54
+- \b "~ack_steer_angle_min" : \b [double] minimum steer angle min: -0.54, default: -0.45, max: 0.0
+- \b "~ack_steer_speed_max" : \b [double] maximum steer speed min: 0.0, default: 1.0, max: 2.0
+- \b "~ack_steer_speed_min" : \b [double] minimum steer speed min: -2.0, default: -1.0, max: 0.0
+- \b "~ack_steer_acc_max" : \b [double] maximum steer acceleration min: 0.0, default: 0.36, max: 5.0
+- \b "~ack_axis_distance" : \b [double] distance between axes min: 0.0, default: 1.65, max: 2.0
+- \b "~sim_time" : \b [double] The amount of time to roll trajectories out for in seconds min: 0.0, default: 10.0, max: 10.0
+- \b "~sim_granularity" : \b [double] The granularity with which to check for collisions along each trajectory in meters min: 0.0, default: 0.025, max: 5.0
+- \b "~pdist_scale" : \b [double] The weight for the path distance part of the cost function min: 0.0, default: 0.6, max: 5.0
+- \b "~gdist_scale" : \b [double] The weight for the goal distance part of the cost function min: 0.0, default: 0.8, max: 5.0
+- \b "~occdist_scale" : \b [double] The weight for the obstacle distance part of the cost function min: 0.0, default: 0.01, max: 5.0
+- \b "~hdiff_scale" : \b [double] The weight for the heading distance part of the cost function min: 0.0, default: 1.0, max: 500.0
+- \b "~heading_points" : \b [int] The number of points to check the heading min: 1, default: 8, max: 64
+- \b "~vx_samples" : \b [int] The number of samples to use when exploring the x velocity space min: 1, default: 20, max: 300
+- \b "~vtheta_samples" : \b [int] The number of samples to use when exploring the theta velocity space min: 1, default: 20, max: 300
+- \b "~simple_attractor" : \b [bool] Set this to true to allow simple attraction to a goal point instead of intelligent cost propagation min: False, default: False, max: True
+- \b "~angular_sim_granularity" : \b [double] The distance between simulation points for angular velocity should be small enough that the robot doesn't hit things min: 0.0, default: 0.025, max: 1.57079632679
+- \b "~xy_goal_tolerance" : \b [double] Minimum distance to end the current goal min: 0.0, default: 0.5, max: 1.0
+- \b "~heading_goal_tolerance" : \b [double] Minimum angle to end the current goal min: 0.0, default: 0.1, max: 1.57079632679
+- \b "~restore_defaults" : \b [bool] Retore to the default configuration min: False, default: False, max: True
+

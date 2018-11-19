@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<xacro xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931" />
+
+  <xacro:macro name="planar_base_footprint" 
+               params="name 
+                       prefix
+                       length:=0.1
+                       width:=0.1
+                       height:=0.1">
+
+    <link name="base_footprint">
+      <inertial>
+        <mass value="1" />
+        <origin xyz="0 0 0" />
+        <inertia 
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0" 
+          izz="1.0" />
+      </inertial>
+      <collision>
+        <origin xyz="0 0 ${width/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${length} ${width} ${height}"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 ${width/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${length} ${width} ${height}"/>
+        </geometry>
+        <material name="grey2"/>
+      </visual>
+    </link>
+    
+    <gazebo>
+      <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+        <robotNamespace>${prefix}</robotNamespace>
+        <publishTf>1</publishTf>
+        <commandTopic>cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>/${name}/odom</odometryFrame>
+        <odometryRate>20.0</odometryRate>
+        <odometrySource>map</odometrySource>
+        <robotBaseFrame>/${name}/base_footprint</robotBaseFrame>
+      </plugin>
+    </gazebo>
+    
+    <gazebo reference="base_footprint">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+  </xacro:macro>
+</xacro>

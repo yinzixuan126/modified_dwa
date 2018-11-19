@@ -1,0 +1,7 @@
+<!-- -->
+<launch>
+
+   <include file="$(find iri_akp_local_planner_companion)/launch/keyboard_teleop_ely.launch"> 
+  </include> 
+  
+</launch>

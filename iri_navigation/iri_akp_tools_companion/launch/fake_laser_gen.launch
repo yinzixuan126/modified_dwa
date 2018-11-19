@@ -1,0 +1,12 @@
+<!-- -->
+<launch>
+
+  <node pkg ="iri_akp_tools_companion"
+      type="fake_laser_gen"
+      name="$(optenv ROBOT tibi)_fake_laser_gen"
+      output="screen">
+    <param name="laser_mode" value="0" />
+    <remap from="~scan" to="/$(optenv ROBOT tibi)/sensors/front_laser_scan"/>
+  </node>
+
+</launch>

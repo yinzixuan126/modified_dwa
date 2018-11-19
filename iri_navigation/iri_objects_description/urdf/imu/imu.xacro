@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<xacro xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:property name="size" value="0.05" />
+
+  <xacro:macro name="imu" params="parent name prefix *origin">
+
+    <joint name="${name}_base_mount_joint" type="fixed">
+      <xacro:insert_block name="origin" /> 
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.1"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <box size="${size} ${size} ${size}"/>
+        </geometry>
+        <material name="orange"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <box size="${size} ${size} ${size}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo>
+      
+      <plugin name="imu_plugin" filename="libhector_gazebo_ros_imu.so">
+        <updateRate>100.0</updateRate>
+        <bodyName>${name}_link</bodyName>
+        <frameId>${prefix}/${name}_link</frameId> 
+        <topicName>/${name}/data</topicName>
+        <serviceName>/${name}/calibrate</serviceName>
+        <accelOffset>0.0 0.0 0.0</accelOffset>
+        <accelDrift>0.0 0.0 0.0</accelDrift>
+        <accelDriftFrequency>0.0 0.0 0.0</accelDriftFrequency>
+        <accelGaussianNoise>0.0 0.0 0.0</accelGaussianNoise>
+        <rateOffset>0.0 0.0 0.0</rateOffset>
+        <rateDrift>0.0 0.0 0.0</rateDrift>
+        <rateDriftFrequency>0.0 0.0 0.0</rateDriftFrequency>
+        <rateGaussianNoise>0.0 0.0 0.0</rateGaussianNoise>
+        <headingOffset>0.0</headingOffset>
+        <headingDrift>0.0</headingDrift>
+        <headingDriftFrequency>0.0</headingDriftFrequency>
+        <headingGaussianNoise>0.01</headingGaussianNoise>
+        <rpyOffset>0.0 0.0 0.0</rpyOffset>
+        <xyzOffset>0.0 0.0 0.0</xyzOffset>
+        <gaussianNoise>0.01</gaussianNoise>
+      </plugin>
+      -->
+     <!--   
+      <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+          <alwaysOn>true</alwaysOn>       
+          <bodyName>${name}_link</bodyName>
+          <frameName>${prefix}/${name}_link</frameName>
+          <topicName>/${name}/data</topicName>
+          <serviceName>/${name}/calibrate</serviceName>
+          <gaussianNoise>0.01</gaussianNoise>
+          <xyzOffset>0.0 0.0 0.0</xyzOffset>
+          <rpyOffset>0.0 0.0 0.0</rpyOffset>
+          <updateRate>100.0</updateRate>
+      </plugin>
+      -->
+
+    </gazebo>
+    
+    <gazebo reference="${name}_link">
+      <material>Gazebo/Orange</material>
+      <mu1>0</mu1>
+      <mu2>0</mu2>
+    </gazebo>
+
+  </xacro:macro>
+</xacro>

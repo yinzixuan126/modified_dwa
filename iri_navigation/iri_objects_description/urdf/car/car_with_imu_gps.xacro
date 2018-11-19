@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<robot name="$(arg name)" imu_name="$(arg imu_name)" gps_name="$(arg gps_name)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/car/urdf.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/car/gazebo.gazebo" />
+  <xacro:car_gazebo car_name="$(arg name)"/>
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/imu/imu.xacro" />
+  <xacro:imu    parent="base_footprint" name="$(arg imu_name)" prefix="$(arg name)">
+    <!--<origin xyz="-1.0 -0.5 1.4" rpy="0 0 -1.57079"/>-->
+    <origin xyz="-1.0 -0.5 1.4" rpy="0 0 0"/>
+  </xacro:imu>
+  
+  <xacro:include filename="$(find iri_objects_description)/urdf/gps/gps.xacro" />
+  <xacro:gps    parent="base_footprint" name="$(arg gps_name)" prefix="$(arg name)" >
+    <origin xyz="0.7 0 0.9" rpy="0 0 0"/>
+  </xacro:gps>
+
+</robot>

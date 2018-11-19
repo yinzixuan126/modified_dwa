@@ -1,0 +1,41 @@
+<!-- -->
+<launch>
+
+  <!-- wiimote node -->
+  <!-- published topics: /joy -->
+  <!-- subscribed topics: -->
+  <!-- service clients: -->
+  <!-- service servers: -->
+  <!-- action clients: -->
+  <!-- action servers: -->
+  <node pkg ="wiimote"
+        type="wiimote_node.py"
+        name="joy"
+        respawn="true">
+    <remap from="/joy"
+             to="/teleop/joy"/>
+  </node>
+
+
+  <remap from="/segway/cmd_vel"
+           to="/teleop/cmd_vel"/>
+
+  <!-- iri segway node -->
+    <!-- published topics: /segway/status -->
+    <!-- subscribed topics: /segway/cmd_vel -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+  <include file="$(find iri_segway_rmp200)/launch/iri_segway_rmp200.launch"/>
+
+  <!-- iri platform teleop -->
+    <!-- published topics: /teleop/cmd_vel -->
+    <!-- subscribed topics: /teleop/joy -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+  <include file="$(find iri_platform_teleop)/launch/platform_teleop.launch"/>
+
+</launch>

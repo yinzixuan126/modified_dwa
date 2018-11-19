@@ -1,0 +1,84 @@
+<!-- -->
+<launch>
+
+  <arg name="head"        default="False" />
+  <arg name="left_arm"    default="False" />
+  <arg name="right_arm"   default="False" />
+
+ <group ns="tibi">
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find tibi_dabo_description)/urdf/tibi.xacro'"/>
+
+    <!-- robot state publisher node -->
+    <!-- published topics: -->
+    <!-- subscribed topics: $(env ROBOT)/joint_states -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+    <node pkg ="robot_state_publisher"
+          type="state_publisher"
+          name="robot_state_publisher">
+      <param name="tf_prefix" value="/dabo" type="str" />
+    </node>
+
+   <!--<node pkg ="tf" 
+          type="static_transform_publisher" 
+          name="dabo_pose"
+          args="2.0 2.0 0 0 0 0 /tibi/base_footprint /dabo/base_footprint 100"/>-->
+
+  
+  <!--  <param name="robot_description" command="$(find xacro)/xacro.py '$(find tibi_dabo_description)/urdf/dabo.xacro'"/> -->
+    <!-- robot state publisher node -->
+    <!-- published topics: -->
+    <!-- subscribed topics: $(env ROBOT)/joint_states -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+   <!--  <node pkg ="robot_state_publisher"
+          type="state_publisher"
+          name="robot_state_publisher">
+        <param name="tf_prefix" value="dabo" type="str" />
+      </node> -->
+  <group unless="$(arg head)">
+    <node pkg ="tf" 
+          type="static_transform_publisher" 
+          name="head_pan1"
+          args="0.01722 0 0.025 0 0 0 /dabo/neck1 /dabo/neck2 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher" 
+          name="head_tilt1" 
+          args="0 0 0.051 -1.5707963 0 -1.5707963 /dabo/neck2 /dabo/neck3 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher"
+          name="head_roll1"
+          args="0 -0.045 0 -1.5707963 0 -1.5707963 /dabo/neck3 /dabo/head 100"/>
+  </group>
+ <!-- if left arm is not launched, publish static transform-->
+  <group unless="$(arg left_arm)">
+    <node pkg ="tf" 
+          type="static_transform_publisher" 
+          name="left_arm_pan1"
+          args="0.0 0.0 0.023 0.0  0.0 0.0 /dabo/left_shoulder1  /dabo/left_shoulder2 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher"
+          name="left_arm_tilt1"
+          args="0.0 0.0 0.0435 0.0 -1.5707963 0.0 /dabo/left_shoulder2  /dabo/left_arm 100"/>
+  </group> 
+ <!-- if right arm is not launched, publish static transform-->
+  <group unless="$(arg right_arm)">
+    <node pkg ="tf"
+          type="static_transform_publisher" 
+          name="right_arm_pan1"
+          args="0.0  0.0  0.023  0.0  0.0  0.0 /dabo/right_shoulder1 /dabo/right_shoulder2 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher"
+          name="right_arm_tilt1"
+          args="0.0  0.0  0.0435 0.0 -1.5707963  0.0 /dabo/right_shoulder2 /dabo/right_arm 100"/>
+  </group> 
+ </group> 
+</launch>

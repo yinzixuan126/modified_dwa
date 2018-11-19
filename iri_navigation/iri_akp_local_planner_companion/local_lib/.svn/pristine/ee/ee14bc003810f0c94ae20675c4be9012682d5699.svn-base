@@ -1,0 +1,5 @@
+ADD_EXECUTABLE(local_nav_example  local_nav_example.cpp)
+TARGET_LINK_LIBRARIES(local_nav_example people_prediction)
+
+ADD_EXECUTABLE(prediction_example  prediction_example.cpp)
+TARGET_LINK_LIBRARIES(prediction_example people_prediction)

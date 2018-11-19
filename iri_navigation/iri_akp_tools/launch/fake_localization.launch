@@ -1,0 +1,22 @@
+<!-- -->
+<launch>
+
+  <group ns="$(optenv ROBOT tibi)">
+
+    <node name="fake_localization"
+          pkg ="fake_localization"
+          type="fake_localization"
+          respawn="false" >
+      <param name="odom_frame_id"   value="/$(optenv ROBOT tibi)/odom" />
+      <param name="global_frame_id"   value="/map" />
+      <param name="base_frame_id"   value="/$(optenv ROBOT tibi)/base_footprint" />
+      <param name="delta_x"   value="0.0" />
+      <param name="delta_y"   value="0.0" />
+      <param name="delta_yaw" value="0.0" />
+      <remap from="/odom" to="/$(optenv ROBOT tibi)/segway/odom"/>
+      <remap from="base_pose_ground_truth" to="/$(optenv ROBOT tibi)/segway/odom"/>
+    </node>
+
+  </group>
+
+</launch>

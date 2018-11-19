@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/diff_platform/include/wheel.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/diff_platform/include/caster.xacro" />
+
+  <xacro:macro name="diff_platform" params="name">
+    <link name="base_footprint">
+      <inertial>
+        <mass value="1" />
+        <origin xyz="0.0 0 0.0" />
+        <inertia 
+          ixx="0.001" ixy="0.0" ixz="0.0"
+          iyy="0.001" iyz="0.0" 
+          izz="0.001" />
+      </inertial>
+    </link>
+
+    <link name="base_link">
+      <visual>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.4 0.2"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <inertial>
+        <mass value="80" />
+        <origin xyz="0 0 0.3" />
+        <inertia 
+          ixx="24.0" ixy="0.0" ixz="0.0"
+          iyy="24.0" iyz="0.0" 
+          izz="8.0" />
+      </inertial>
+    </link>
+
+    <joint name="base_footprint2base_link" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin rpy="0 0 0" xyz="0 0 0.24"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- left wheel -->
+    <xacro:wheel prefix="left" parent="base_link" visual_angle="3.14">
+      <origin xyz="0 0.2725 0.0" rpy="0 0 0" />
+    </xacro:wheel>
+
+    <!-- right wheel -->
+    <xacro:wheel prefix="right" parent="base_link" visual_angle="0.0">
+      <origin xyz="0 -0.2725 0.0" rpy="0 0 0" />
+    </xacro:wheel>
+
+    <!-- caster support -->
+    <link name="caster_support">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia 
+          ixx="0.001" ixy="0.0" ixz="0.0" 
+          iyy="0.001" iyz="0.0" 
+          izz="0.001"/>
+      </inertial>
+      <visual>
+       <origin xyz="0 0 -0.035" rpy="0 0 0" />
+       <geometry>
+         <box size="0.7 0.4 0.07"/>
+       </geometry>
+       <material name="grey"/>
+      </visual>
+    </link>
+
+    <joint name="base_link2caster_support" type="fixed">
+      <parent link="base_link"/>
+      <child link="caster_support"/>
+      <origin rpy="0 0 0" xyz="0 0 0.005"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- front caster set -->
+    <xacro:caster prefix="front" parent="caster_support">
+      <origin xyz="0.3292 0 -0.07" rpy="0 0 3.14159" />
+    </xacro:caster>
+
+    <!-- rear caster set -->
+    <xacro:caster prefix="rear" parent="caster_support">
+      <origin xyz="-0.3292 0 -0.07" rpy="0 0 0" />
+    </xacro:caster>
+
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/${name}</robotNamespace>
+        <controlPeriod>0.0078</controlPeriod>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+        <rosDebugLevel>Debug</rosDebugLevel>
+        <robotNamespace>${name}</robotNamespace>
+        <publishTf>1</publishTf>
+        <publishWheelTF>false</publishWheelTF>
+        <publishWheelJointState>false</publishWheelJointState>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>10</updateRate>
+        <leftJoint>base_link_right_wheel_joint</leftJoint>
+        <rightJoint>base_link_left_wheel_joint</rightJoint>
+        <wheelSeparation>0.545</wheelSeparation>
+        <wheelDiameter>0.48</wheelDiameter>
+        <wheelTorque>100</wheelTorque>
+        <wheelAcceleration>0.0</wheelAcceleration>
+        <commandTopic>cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>/${name}/odom</odometryFrame>
+        <odometrySource>world</odometrySource>
+        <robotBaseFrame>/${name}/base_footprint</robotBaseFrame>
+      </plugin>
+    </gazebo>
+
+    <gazebo reference="base_footprint">
+      <material>Gazebo/Black</material>
+    </gazebo>
+ 
+    <gazebo reference="base_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="caster_support">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+
+  </xacro:macro>
+
+</root>

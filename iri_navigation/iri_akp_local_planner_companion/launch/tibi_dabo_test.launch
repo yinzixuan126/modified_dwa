@@ -1,0 +1,83 @@
+<!-- -->
+<launch>
+
+  <!-- load robot defined machines -->
+  <include file="$(find tibi_dabo_base)/machines/$(env ROBOT)_$(env ROS_MODE).machines" />
+
+  <!-- tibi/dabo sensors -->
+    <!-- published topics: /$(env ROBOT)/sensors/front_laser_scan -->
+    <!--                   /$(env ROBOT)/sensors/rear_laser_scan -->
+    <!--                   /$(env ROBOT)/sensors/vertical_laser_scan -->
+    <!--                   /$(env ROBOT)/sensors/head_right_image -->
+    <!--                   /$(env ROBOT)/sensors/payload_battery_status -->
+    <!--                   /$(env ROBOT)/sensors/joy -->
+    <!-- subscribed topics: -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+  <include file="$(find tibi_dabo_base)/launch/$(env ROBOT)_sensors.launch">
+    <arg name="front_laser"     value="True" />
+    <arg name="rear_laser"      value="True" />
+    <arg name="vertical_laser"  value="False" />
+    <arg name="wiimote"         value="True" />
+    <arg name="bumblebee_right" value="False" />
+    <arg name="battery"         value="False" />
+  </include>
+
+  <!-- tibi/dabo devices -->
+    <!-- published topics: $(env ROBOT)/joint_states -->
+    <!--                   $(env ROBOT)/segway/status-->
+    <!-- subscribed topics: $(env ROBOT)/head/joint_position -->
+    <!--                    $(env ROBOT)/head/facial_expression -->
+    <!--                    $(env ROBOT)/segway/cmd_vel -->
+    <!--                    $(env ROBOT)/joint_states -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: $(env ROBOT)/left_arm/motion_sequence -->
+    <!--                  $(env ROBOT)/left_arm/joint_motion -->
+    <!--                  $(env ROBOT)/right_arm/motion_sequence -->
+    <!--                  $(env ROBOT)/right_arm/joint_motion -->
+    <!--                  $(env ROBOT)/head/motion_sequence -->
+    <!--                  $(env ROBOT)/head/lights_sequence -->
+    <!--                  $(env ROBOT)/head/joint_motion -->
+  <include file="$(find tibi_dabo_base)/launch/$(env ROBOT)_devices.launch">
+    <arg name="head"            value="False" />
+    <arg name="left_arm"        value="False" />
+    <arg name="right_arm"       value="False" />
+    <arg name="platform"        value="True" />
+  </include>
+
+  <!-- AMCL + Map Server-->
+    <!-- published topics: /$(env ROBOT)/map -->
+    <!-- subscribed topics: /$(env ROBOT)/sensors/front_laser_scan -->
+    <!--                    /$(env ROBOT)/tf -->
+    <!--                    /$(env ROBOT)/initialpose -->
+    <!-- service clients: -->
+    <!-- service servers: -->
+    <!-- action clients: -->
+    <!-- action servers: -->
+  <include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_amcl.launch"/>
+  <include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_map_server.launch">
+    <arg name="map" value="fme_open"/>
+  </include>
+
+  <include file="$(find iri_platform_teleop)/launch/tibi_dabo_teleop.launch"/>
+
+  <!-- MOVE_BASE navigation -->
+  <include file="$(find iri_akp_local_planner_companion)/launch/tibi_dabo_akp_local.launch">
+    <arg name="map" value="fme_open"/>
+  </include>
+
+  <include file="$(find iri_laser_people_detection)/launch/tibi_dabo_lpd_map.launch"/>
+  <include file="$(find iri_laser_people_map_filter)/launch/tibi_dabo_laser_people_map_filter.launch"/>
+  <include file="$(find iri_people_tracking_mht)/launch/tibi_dabo_mht_map.launch"/>
+
+  <node name="rviz" 
+        pkg ="rviz" 
+        type="rviz"
+        machine="monitor" 
+        args="-d $(find iri_akp_local_planner_companion)/config/$(env ROBOT)_akp.rviz" />
+
+</launch>

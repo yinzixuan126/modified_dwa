@@ -1,0 +1,7 @@
+<library path="lib/libiri_akp_local_planner_companion">
+  <class name="iri_akp_local_planner_companion/AkpLocalPlanner" type="AkpLocalPlanner" base_class_type="nav_core::BaseLocalPlanner">
+    <description>
+      A template implementation of a local planner
+    </description>
+  </class>
+</library>

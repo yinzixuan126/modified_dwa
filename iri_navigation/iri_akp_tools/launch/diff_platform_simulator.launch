@@ -1,0 +1,15 @@
+<!-- -->
+<launch>
+
+  <node pkg ="iri_akp_tools"
+        type="diff_platform_simulator"
+        name="platform_simulator"
+        output="screen">
+    <param name="robot" type="string" value="$(optenv ROBOT tibi)" />
+    <remap from="~cmd_vel"
+            to="/$(optenv ROBOT tibi)/segway/cmd_vel" />
+    <remap from="~odom"
+            to="/$(optenv ROBOT tibi)/segway/odom" />
+  </node>
+
+</launch>

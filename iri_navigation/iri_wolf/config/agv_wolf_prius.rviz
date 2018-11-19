@@ -1,0 +1,351 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 108
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /Grid1
+        - /TF1
+      Splitter Ratio: 0.5
+    Tree Height: 687
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.588679
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: BR Laser
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 1000
+      Reference Frame: agv_footprint
+      Value: true
+    - Angle Tolerance: 0.5
+      Class: rviz/Odometry
+      Color: 170; 17; 53
+      Enabled: true
+      Keep: 0
+      Length: 5
+      Name: Odometry
+      Position Tolerance: 1
+      Topic: /odom
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 0; 0; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 0; 0; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: BL Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /laserscanner1/laserscan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 85; 255; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: BR Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /laserscanner2/laserscan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 0; 255; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: FL Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /laserscanner3/laserscan
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: BL Laser
+      Radius: 0.1
+      Reference Frame: agv_lidar0
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: BR Laser
+      Radius: 0.1
+      Reference Frame: agv_lidar1
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: FL Laser
+      Radius: 0.1
+      Reference Frame: agv_lidar5
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /iri_wolf/corners
+      Name: Landmarks
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /iri_wolf/lines
+      Name: Lines
+      Namespaces:
+        /lines: true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /iri_wolf/vehicle
+      Name: vehicle
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /iri_wolf/constraints
+      Name: Constraints
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        agv_base_link:
+          Value: true
+        agv_car_link:
+          Value: true
+        agv_conti20xL:
+          Value: true
+        agv_conti20xR:
+          Value: true
+        agv_conti30x:
+          Value: true
+        agv_footprint:
+          Value: true
+        agv_lidar0:
+          Value: true
+        agv_lidar1:
+          Value: true
+        agv_lidar5:
+          Value: true
+        agv_lidarbase_link:
+          Value: true
+        agv_radarbase_link:
+          Value: true
+        arts_base:
+          Value: true
+        arts_node_0:
+          Value: true
+        arts_node_2:
+          Value: true
+        arts_node_3:
+          Value: true
+        arts_node_4:
+          Value: true
+        arts_node_5:
+          Value: true
+        arts_node_6:
+          Value: true
+        map:
+          Value: true
+        odom:
+          Value: true
+        world:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        map:
+          {}
+        world:
+          arts_base:
+            arts_node_2:
+              {}
+            arts_node_3:
+              {}
+            arts_node_4:
+              {}
+            arts_node_5:
+              {}
+          odom:
+            agv_footprint:
+              agv_base_link:
+                agv_car_link:
+                  {}
+                agv_lidarbase_link:
+                  agv_lidar0:
+                    {}
+                  agv_lidar1:
+                    {}
+                  agv_lidar5:
+                    {}
+                agv_radarbase_link:
+                  agv_conti20xL:
+                    {}
+                  agv_conti20xR:
+                    {}
+                  agv_conti30x:
+                    {}
+                arts_node_0:
+                  {}
+                arts_node_6:
+                  {}
+      Update Interval: 0
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: agv_footprint
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 70.1463
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -2.27421
+        Y: -4.87
+        Z: 1.84149
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 0.3848
+      Target Frame: vehicle
+      Value: Orbit (rviz)
+      Yaw: 3.30546
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 998
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd00000004000000000000013c0000035cfc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000280000035c000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000035cfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000035c000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000005010000003efc0100000002fb0000000800540069006d0065010000000000000501000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000000003bf0000035c00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1281
+  X: 349
+  Y: 14

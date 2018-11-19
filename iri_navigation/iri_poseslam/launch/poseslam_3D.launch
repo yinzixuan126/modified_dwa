@@ -1,0 +1,142 @@
+<!-- poseslam testing-->
+<launch>
+
+<!--POSE SLAM-->
+<node name="iri_poseslam"
+      pkg="iri_poseslam"
+      type="iri_poseslam"
+      output="screen">
+
+      <param name="~match_area_x"  value="3.0"/> <!--3.0-->
+      <param name="~match_area_y"  value="3.0"/> <!--3.0-->
+      <param name="~match_area_th" value="0.3"/> <!--0.261799388-->
+
+      <param name="~pd_range_1" value="0.2"/> <!--usually 0.2 - If the probability of 2 poses of being closer than 'matchArea' is larger than 'pd.first' we try to create a loop.-->
+      <param name="~pd_range_2" value="0.9"/> <!--usually 0.9 - If the probability of 2 poses of being closer than 'matchArea' is larger than 'pd.second' they are close enough for one of them to be redundant-->
+      <param name="~ig_range_1" value="7.0"/> <!--usually 7.0 - If the information gain is smaller than 'ig.first' the pose is redundant and it can be overwrite next time slice-->
+      <param name="~ig_range_2" value="11.0"/> <!--usually 11.0 - If the information gain is larger than 'ig.second' we try to create a loop-->
+
+      <param name="~closing_loop_noise_xx"   value="7.25483e-06"/>
+      <param name="~closing_loop_noise_xy"   value="-8.98881e-07"/>
+      <param name="~closing_loop_noise_xth"  value="5.23212e-07"/>
+      <param name="~closing_loop_noise_yy"   value="9.29614e-06"/>
+      <param name="~closing_loop_noise_yth"  value="-1.09644e-06"/>
+      <param name="~closing_loop_noise_thth" value="4.70196e-07"/>
+
+      <param name="~ignore_previous_steps"   value="4"/>
+
+      <remap from="~get_link" to="/sensors_2_link/get_link"/>
+
+</node>
+
+<!--SERVICES AND PUBLISHERS-->
+<!-- <node name="odomfused"
+      pkg="iri_segway_rmp400_odom"
+      type="odomfused"
+      output="screen">
+      <remap from="~segway_status" to="/teo/segway/status" />
+      <remap from="~imu" to="/teo/sensors/imu" />
+      <remap from="~odom_rel" to="/teo/odom_rel" />
+      <remap from="~odom" to="/teo/odom" />
+
+      <param name="~odom_id"      value="/teo/odom"/>
+      <param name="~base_link_id" value="/teo/base_footprint"/>
+      <param name="~sigma_dx"     value="0.1"/>
+      <param name="~sigma_thimu"  value="0.1"/>
+      <param name="~six_d"        value="false"/>
+      <param name="~publish_tf"   value="true"/>
+</node> -->
+
+<node name="sensors_2_link"
+      pkg="iri_poseslam"
+      type="sensors_2_link"
+      output="screen">
+      <remap from="~scan" to="/teo/sensors/front_laser" /> <!--/teo/front_laser/scan - /teo/sensors/front_laser-->
+      <remap from="~cmd_vel" to="/teo/segway/cmd_vel" />
+      <remap from="~odom_relative" to="/teo/odom_rel" /> 
+      <remap from="~get_relative_pose" to="/iri_laser_icp/get_relative_pose" />
+
+      <param name="~fusion_mode"                      value="2"/>
+      <param name="~online_mode"                      value="true"/>
+      <param name="~ICP_covariance_correction_factor" value="100.0"/>
+      <param name="~N_scans_discard" value="5.0"/>
+</node>
+
+<node name="iri_laser_icp"
+      pkg="iri_laser_icp"
+      type="iri_laser_icp"
+      output="screen">
+    <param name="~max_angular_correction_deg" value="50"/>
+    <param name="~max_linear_correction"      value="3.0"/>
+    <param name="~max_iterations"             value="50"/>
+    <param name="~max_correspondence_dist"    value="3.0"/>
+    <param name="~clustering_threshold"       value="0.1"/>
+    <param name="~orientation_neighbourhood"  value="200"/>
+    <param name="~use_point_to_line_distance" value="0"/>
+    <param name="~use_corr_tricks"            value="1"/>
+    <param name="~restart"                    value="1"/>
+    <param name="~do_visibility_test"         value="0"/>
+    <param name="~do_compute_covariance"      value="1"/>
+    <param name="~epsilon_xy"                 value="0.000000001"/>
+    <param name="~epsilon_theta"              value="0.000000001"/>
+    <param name="~debug_verify_tricks"        value="0"/>
+    <param name="~outliers_adaptive_order"    value="0.8"/>
+    <param name="~min_laser_range"            value="1.0"/>
+    <param name="~max_laser_range"            value="1.0e10"/>
+</node>
+
+
+<!--RESULTS VISUALIZATION-->
+<node name="rviz"
+      pkg="rviz"
+      type="rviz"
+      args="-d $(find iri_poseslam)/config/poseslam3D.vcg" />
+
+<node name="trajectory_scans_2_pointcloud"
+      pkg="iri_poseslam"
+      type="trajectory_scans_2_pointcloud"
+      output="screen">
+      <remap from="~scan" to="/teo/sensors/front_laser" /> <!--/teo/front_laser/scan - /teo/sensors/front_laser-->
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" />
+      <param name="~publish_redundant"  value="true"/>
+</node>
+
+<node name="trajectory_3Dscans_2_pointcloud"
+      pkg="iri_poseslam"
+      type="trajectory_3Dscans_2_pointcloud"
+      output="screen">
+      <remap from="~slices3D" to="/teo/sensors/h3d/slice" /> 
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" />
+      <param name="~dth_base_2_h3d"  value="-0.12"/>
+      <param name="~dz_base_2_h3d"  value="0.90"/>
+</node>
+
+<node name="trajectory_2_markers"
+      pkg="iri_poseslam"
+      type="trajectory_2_markers"
+      output="screen">
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" />
+</node>
+
+<include file="$(find teo_base)/launch/teo_state_publisher.launch" />
+
+<node name="trajectory_broadcaster"
+      pkg="iri_poseslam"
+      type="trajectory_broadcaster"
+      output="screen">
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" />
+      <param name="~odom_frame_id"      value="/teo/odom"/>
+      <param name="~base_frame_id"      value="/teo/base_link"/>
+      <param name="~map_frame_id"       value="/map"/>
+</node>
+
+
+<!--SIMULATION-->
+
+<param name="use_sim_time" value="true" />
+
+<node pkg="rosbag"
+      type="play"
+      name="rosbag"
+      args="-d 5 --clock -k $(find iri_poseslam)/data/per_poseslam_offline_minibrl_outside_2013-12-17-12-13-07.bag"/>
+</launch>

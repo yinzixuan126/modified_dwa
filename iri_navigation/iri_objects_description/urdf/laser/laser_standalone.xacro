@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<robot name="$(arg name)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  
+  <xacro:include filename="$(find iri_objects_description)/urdf/planar_base_footprint/include/planar_base_footprint.xacro" />
+  
+  <xacro:property name="height" value="1.0" />
+  <xacro:property name="sensor_name" value="laser" />
+
+  <xacro:planar_base_footprint
+    name="$(arg name)" 
+    prefix="$(arg name)" >
+  </xacro:planar_base_footprint>
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/laser/include/laser.xacro" />
+
+  <xacro:laser 
+    parent="base_footprint"
+    name="$(arg name)"
+    prefix="$(arg name)" >
+    <origin xyz="0 0 ${height}" rpy="0 0 0"/>
+  </xacro:laser>
+
+</robot>

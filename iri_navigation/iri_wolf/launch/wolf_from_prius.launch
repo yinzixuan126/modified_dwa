@@ -1,0 +1,51 @@
+<launch>
+
+    <!-- User Args  -->
+    <!--<arg name="bag_file_name" default="/home/jvallve/bags/TNO-dataset/prius/prius_2015-11-19-13-01-20_3.bag" /> -->
+    <!--<arg name="bag_file_name" default="/home/jvallve/bags/TNO-dataset/prius/prius_2015-11-19-13-12-18_4.bag" /> -->
+    <!--<arg name="bag_file_name" default="/home/jvallve/bags/TNO-dataset/prius/prius_2015-11-19-13-23-07_5.bag" /> -->
+    <arg name="bag_file_name" default="/home/jvallve/bags/TNO-dataset/prius/prius_2015-11-19-13-54-36_8.bag" /> 
+    <arg name="model" default="$(find agv_description)/urdf/agv.xacro"/> 
+    <arg name="rviz" default="true" /> 
+    
+    <!-- Set use_sim_time parameter in the parameter server-->
+    <param name="use_sim_time" value="true" />
+    
+    <!--Play the rosbag -->
+    <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args="-d 1 -s 20 -r 1 --pause --clock $(arg bag_file_name)">
+    </node>
+    
+    <!--WOLF-->
+    <node name="iri_wolf"
+        pkg="iri_wolf"
+        type="iri_wolf"
+        output="screen">
+        <param name="window_length" value="50"/>
+        <param name="new_frame_elapsed_time" value="5"/>
+        <param name="segment_window_length" value="0.5"/>
+        <param name="min_window_points" value="5"/>
+        <param name="k_sigmas_ut" value="2"/>
+        <param name="draw_lines" value="false"/>
+        <param name="n_lasers" value="3"/>
+        <param name="laser_0_frame_name" value="agv_lidar0"/>
+        <param name="laser_1_frame_name" value="agv_lidar5"/>
+        <param name="laser_2_frame_name" value="agv_lidar1"/>
+        <param name="base_frame_name" value="agv_footprint"/>
+        <remap from="~odometry" to="/odom"/>
+        <remap from="~laser_0" to="/laserscanner1/laserscan"/>
+        <remap from="~laser_1" to="/laserscanner2/laserscan"/>
+        <remap from="~laser_2" to="/laserscanner3/laserscan"/>
+    </node>
+    
+    <!--RESULTS VISUALIZATION-->
+    <group if="$(arg rviz)">
+        <node name="rviz"
+            pkg="rviz"
+            type="rviz" 
+            args="-d $(find iri_wolf)/config/agv_wolf_prius.rviz" />
+    </group>
+
+</launch>

@@ -1,0 +1,7 @@
+<library path="lib/libiri_simulated_person_companion_akp_local_planner">
+  <class name="iri_simulated_person_companion_akp_local_planner/AkpLocalPlanner" type="AkpLocalPlanner" base_class_type="nav_core::BaseLocalPlanner">
+    <description>
+      A template implementation of a local planner
+    </description>
+  </class>
+</library>

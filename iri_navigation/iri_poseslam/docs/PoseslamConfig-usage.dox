@@ -1,0 +1,15 @@
+\subsubsection usage Usage
+\verbatim
+<node name="PoseslamAlgorithm" pkg="iri_poseslam" type="PoseslamAlgorithm">
+  <param name="match_area_x" type="double" value="3.0" />
+  <param name="match_area_y" type="double" value="3.0" />
+  <param name="match_area_th" type="double" value="0.2617994" />
+  <param name="pd_range_1" type="double" value="0.1" />
+  <param name="pd_range_2" type="double" value="0.9" />
+  <param name="ig_range_1" type="double" value="7.0" />
+  <param name="ig_range_2" type="double" value="9.0" />
+  <param name="ignore_previous_steps" type="int" value="1" />
+  <param name="K_mahalanobis" type="double" value="3.3682" />
+</node>
+\endverbatim
+

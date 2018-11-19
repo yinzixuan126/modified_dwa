@@ -1,0 +1,25 @@
+<!-- -->
+<launch>
+
+  <include file="$(find tibi_dabo_base)/machines/$(env ROBOT)_$(env ROS_MODE).machines" />
+
+  <group ns="$(env ROBOT)">
+
+    <node pkg="iri_platform_teleop"
+          type="iri_platform_teleop"
+          name="teleop"
+          machine="nav">
+      <param name="joy_watchdog_time"          type="double" value="1.0"/>
+      <param name="translation_increment_step" type="double" value="0.1"/>
+      <param name="rotation_increment_step"    type="double" value="0.1"/>
+      <param name="max_translation_speed"      type="double" value="0.8"/>
+      <param name="max_rotation_speed"         type="double" value="0.9"/>
+      <remap from="/$(env ROBOT)/teleop/cmd_vel"
+               to="/$(env ROBOT)/segway/cmd_vel"/>
+      <remap from="/$(env ROBOT)/teleop/joy"
+               to="/$(env ROBOT)/sensors/joy"/>
+    </node>
+
+  </group>
+
+</launch>

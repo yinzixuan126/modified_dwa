@@ -1,0 +1,74 @@
+
+<!-- Launch para lanzar rosbags -->
+<launch>
+
+ <include file="$(find tibi_dabo_base)/machines/$(env ROBOT)_$(env ROS_MODE).machines" />
+
+
+  <!-- <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args=" -l $(find iri_akp_local_planner_companion)/rosbags_akp_learning_parametros_fuerzas/rosbags_pruebas/tibi/2017-05-26-12-27-06.bag $(find iri_akp_local_planner_companion)/rosbags_akp_learning_parametros_fuerzas/rosbags_pruebas/teo/2017-05-26-12-27-01.bag"/> -->
+
+
+  <arg name="filename1" default="teo/2017-05-26-12-27-01"/>
+  <arg name="filename2" default="tibi/2017-05-26-12-27-06"/>
+  <arg name="delay"     default="3.0"/>
+  <arg name="path"     default="$(find iri_akp_local_planner_companion)/rosbags_akp_learning_parametros_fuerzas/rosbags_pruebas"/>
+  <arg name="rate"     default="1"/>
+
+  <param name="use_sim_time" value="false"/>
+
+  <node pkg="rosbag"
+        type="play"
+        name="rosbag1"
+        args="$(arg path)/$(arg filename1).bag -r $(arg rate)"
+        output="screen">
+  </node>
+  
+  <node pkg="rosbag"
+        type="play"
+        name="rosbag2"
+        args="$(arg path)/$(arg filename2).bag -r $(arg rate) -d $(arg delay)"
+        output="screen">
+  </node>
+
+
+<!-- Rosbags akp_companion!!! (paper journal_parameter_learning_2017) -->
+<!-- rosrun rviz rviz -d home/ely7787/iri-lab/iri_ws/src/tibi_dabo_robot/tibi_dabo_apps/rviz/tibi_companion.rviz
+    rosbag play 2017-05-15-15-59-25.bag
+  Rosbag prueba: rosbags_learning_companion/2017-05-15-15-59-25.bag
+
+    Folder: /rosbags_akp_learning_parametros_fuerzas/rosbags_pruebas/tibi/
+    
+      rosbags_pruebas:
+        tibi/2017-05-25-12-23-16.bag
+        teo/2017-05-25-12-23-12.bag
+
+      rosbags_pruebas viernes:
+      1) tibi/2017-05-26-12-19-40.bag
+         teo/2017-05-26-12-19-34.bag
+      2) tibi/2017-05-26-12-27-06.bag
+         teo/2017-05-26-12-27-01.bag      
+
+-->
+    
+    <!-- tibi_dabo urdf model -->
+    <!-- <param name="robot_description" command="cat $(find tibi_dabo_base)/model/tibi_base.urdf" />  -->
+
+  <group ns="$(optenv ROBOT tibi)"> 
+     <param name="robot_description" command="$(find xacro)/xacro.py '$(find tibi_dabo_description)/urdf/$(env ROBOT)_lasers.xacro'"/>
+  </group>
+
+   <!-- <remap from="/tibi/sensors/front_laser_scan"
+             to="/tibi/sensors/front_laser_scan"/>
+   </node> -->
+  
+
+       <node name="rviz" pkg ="rviz" type="rviz" 
+        args="-d $(find tibi_dabo_apps)/rviz/teo_tibi.rviz" /> 
+
+
+  <!-- <node name="dr" pkg ="rqt_reconfigure" type="rqt_reconfigure" machine="monitor"/>-->
+        
+ </launch>

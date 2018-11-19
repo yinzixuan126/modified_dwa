@@ -1,0 +1,24 @@
+<!-- -->
+<launch>
+
+  <group ns="$(optenv ROBOT dabo)">
+
+    <node name="fake_localization2"
+          pkg ="fake_localization"
+          type="fake_localization"
+          respawn="false" >
+      <param name="odom_frame_id"   value="/$(optenv ROBOT dabo)/odom" />
+      <param name="global_frame_id"   value="/map" />
+      <param name="base_frame_id"   value="/$(optenv ROBOT dabo)/base_footprint" />
+      <!-- parameters to change the robot initial position, if want the robot in -1 and -8=> delta_x=1.0 ; delta_y=8.0 -->
+      <param name="delta_x"   value="8.0" /> <!-- Normal position (estrechez mitad camino) = delta_x=1.0 ;  delta_y=1.0 ; delta_yaw=0.0 -->
+      <param name="delta_y"   value="0.0" /> <!-- GIRO ESQUINA position (estrechez mitad camino)= delta_x=0.0 ;  delta_y=-15.0 ; delta_yaw=1.57 -->
+      <param name="delta_yaw" value="0.0" /> <!-- GIRO ESQUINA robot como persona => delta_x=0.0 ;  delta_y=-15.0 ; delta_yaw=1.57 -->
+<!-- Normal position (estrechez mitad camino) = delta_x=1.0 ;  delta_y=0.5 ; delta_yaw=0.0 -->
+      <remap from="/odom" to="/$(optenv ROBOT dabo)/segway/odom"/>
+      <remap from="base_pose_ground_truth" to="/$(optenv ROBOT dabo)/segway/odom"/>
+    </node>
+
+  </group>
+
+</launch>

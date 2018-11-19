@@ -1,0 +1,26 @@
+<!-- Launches wolf node from TNO october'14 dataset-->
+
+<launch>
+
+<!-- User Args  -->
+<arg name="max_vertex" default="0" /> 
+<arg name="file" default="/home/jvallve/bags/graphs/input_M3500b_toro.graph" /> 
+<arg name="ig_theshold" default="1" /> 
+
+<!--WOLF-->
+<node name="iri_wolf_prunning"
+      pkg="iri_wolf"
+      type="iri_wolf_prunning"
+      output="screen">
+      <param name="~max_vertex" value="$(arg max_vertex)"/>
+      <param name="~file_path" value="$(arg file)"/>
+      <param name="~ig_threshold" value="$(arg ig_theshold)"/>
+</node>
+	
+<!--RESULTS VISUALIZATION-->
+<node name="rviz"
+      pkg="rviz"
+      type="rviz" 
+      args="-d $(find iri_wolf)/config/wolf_prunning.rviz" />
+
+</launch>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot name="$(arg name)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--<xacro:property name="M_PI" value="3.1415926535897931"/>-->
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/person/gazebo.gazebo" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/person/urdf.urdf" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/person/urdf_face.urdf" />
+  <xacro:person person_name="$(arg name)">
+  </xacro:person>
+
+</robot>

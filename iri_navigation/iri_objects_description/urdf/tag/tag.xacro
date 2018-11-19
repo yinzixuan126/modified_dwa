@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<xacro xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <!--<xacro:property name="size" value="0.05" />-->
+
+  <xacro:macro name="tag" params="parent prefix tag_name:=tag tag_id:=95 tag_size:=0.25 *origin">
+
+    <joint name="${parent}2${tag_name}base" type="fixed">
+      <xacro:insert_block name="origin" /> 
+      <parent link="${parent}"/>
+      <child link="${tag_name}_tag_base_link"/>
+    </joint>
+
+    <link name="${tag_name}_tag_base_link">
+      <collision>
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/>
+        <geometry>
+          <box size="${2*tag_size} ${2*tag_size} 0.01"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/>
+        <geometry>
+          <box size="${2*tag_size} ${2*tag_size} 0.01"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+    </link>
+    
+    <link name="${tag_name}">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${tag_size} ${tag_size} 0.01"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iri_objects_description/urdf/tag/marker${tag_id}.dae" scale="${tag_size} ${tag_size} 1"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="${tag_name}base2${tag_name}tag" type="fixed">
+      <parent link="${tag_name}_tag_base_link"/>
+      <child link="${tag_name}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <!-- gazebo material does not work here, link appears with prefix (of parent xacro robot name, "platform"), adding it doesnt solve it
+    <gazebo reference="/${prefix}/${tag_name}_tag_base_link">
+      <material>Gazebo/White</material>
+    </gazebo>
+    -->
+
+  </xacro:macro>
+</xacro>

@@ -1,0 +1,10 @@
+unsafe: false
+min_dist: 0.5
+collision_time: 1.5
+limit_vel_front: 1.0
+limit_vel_rear: -1.0
+front_laser_watchdog_time: 1.0
+rear_laser_watchdog_time: 1.0
+#base_frame: "/myrobot/base_link" #passed as param in launch /ns/base_link
+unsafe_joy_button_id: 4
+mode: 1 #available modes: 0: front_rear, 1: frame_check

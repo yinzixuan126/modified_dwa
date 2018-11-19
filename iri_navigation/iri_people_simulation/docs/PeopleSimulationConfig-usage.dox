@@ -1,0 +1,13 @@
+\subsubsection usage Usage
+\verbatim
+<node name="PeopleSimulationAlgorithm" pkg="iri_people_simulation" type="PeopleSimulationAlgorithm">
+  <param name="robot" type="str" value="unknown" />
+  <param name="simulation_mode" type="int" value="0" />
+  <param name="vis_mode" type="bool" value="False" />
+  <param name="remove_targets" type="bool" value="False" />
+  <param name="number_persons" type="int" value="0" />
+  <param name="force_map_path" type="str" value="" />
+  <param name="destination_map_path" type="str" value="" />
+</node>
+\endverbatim
+

@@ -1,0 +1,7 @@
+#goal definition
+---
+#result definition
+bool    successful
+---
+#feedback
+float32 current_dist

@@ -1,0 +1,40 @@
+<!-- -->
+<launch>
+
+  <include file="$(find tibi_dabo_base)/machines/$(env ROBOT)_$(env ROS_MODE).machines" />
+
+  <group ns="$(env ROBOT)">
+
+    <node pkg="iri_platform_teleop"
+          type="iri_platform_teleop"
+          name="teleop"
+          machine="nav">
+      <param name="joy_watchdog_time"          type="double" value="1.0"/>
+      <param name="translation_increment_step" type="double" value="0.1"/>
+      <param name="rotation_increment_step"    type="double" value="0.1"/>
+      <param name="max_translation_speed"      type="double" value="0.8"/>
+      <param name="max_rotation_speed"         type="double" value="0.9"/>
+      <remap from="/$(env ROBOT)/teleop/cmd_vel"
+               to="/$(env ROBOT)/teleop/cmd_vel_unsafe"/>
+      <remap from="/$(env ROBOT)/teleop/joy"
+               to="/$(env ROBOT)/sensors/joy"/>
+    </node>
+
+    <node pkg="iri_safe_cmd"
+          type="iri_safe_cmd"
+          name="iri_safe_cmd"
+          machine="nav">
+      <param name="unsafe"          type="bool"   value="false"/>
+      <param name="min_dist"        type="double" value="0.3"/>
+      <param name="collision_time"  type="double" value="1.5"/>
+      <param name="limit_vel_front" type="double" value="1.0"/>
+      <param name="limit_vel_rear"  type="double" value="1.0"/>
+      <param name="front_laser_watchdog_time" type="double" value="1.0"/>
+      <param name="rear_laser_watchdog_time"  type="double" value="1.0"/>
+      <remap from="~cmd_vel_safe" to="/$(env ROBOT)/teleop/cmd_vel"/>
+      <remap from="~cmd_vel"      to="/$(env ROBOT)/teleop/cmd_vel_unsafe"/>
+      <remap from="~rear_laser"   to="/$(env ROBOT)/sensors/rear_laser_scan"/>
+      <remap from="~front_laser"  to="/$(env ROBOT)/sensors/front_laser_scan"/>
+      </node>
+  </group>
+</launch>

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<package>
+  <name>iri_akp_local_planner_car</name>
+  <version>1.0.0</version>
+  <description>The iri Anticipating local planner (AKP) 
+    is a ROS navigation plugin contaning the algorithm presented in
+    the publication IROS'14, IROS'15. Now modified to be adapted
+    to autonomous driving</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <maintainer email="joperez@iri.upc.edu">Jordi Perez Talamino</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>LGPL</license>
+
+
+  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/iri_akp_local_planner</url> -->
+
+
+  <!-- Author tags are optional, mutiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintianers, but could be -->
+  <!-- Example: -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+
+  <!-- The *_depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <!-- ****************************************************************** -->
+  <!--                 Place build dependencies here                      -->
+  <!-- ****************************************************************** -->
+  <!--   <build_depend>message_generation</build_depend> -->
+  <build_depend>iri_base_algorithm</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>iri_perception_msgs</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>nav_core</build_depend>
+  <build_depend>costmap_2d</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>cmake_modules</build_depend>
+
+  <!-- ****************************************************************** -->
+  <!--                   Place run dependencies here                      -->
+  <!-- ****************************************************************** -->
+  <!--   <run_depend>message_runtime</run_depend> -->
+  <run_depend>iri_base_algorithm</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>iri_perception_msgs</run_depend>
+  <run_depend>pluginlib</run_depend>
+  <run_depend>nav_core</run_depend>
+  <run_depend>costmap_2d</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>cmake_modules</run_depend>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+    <nav_core plugin="${prefix}/akp_lp_plugin.xml" />
+  </export>
+</package>

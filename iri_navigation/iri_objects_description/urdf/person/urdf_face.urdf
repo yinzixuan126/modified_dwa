@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<robot name="person">
+
+  <link name="face">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://iri_objects_description/urdf/person/face.dae" scale="0.8 0.8 0.8"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://iri_objects_description/urdf/person/face.dae" scale="0.8 0.8 0.8"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="head2personface" type="fixed">
+    <parent link="head"/>
+    <child link="face"/>
+    <origin xyz="0.13 0 0.0" rpy="0 3.14 -1.57"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+</robot>

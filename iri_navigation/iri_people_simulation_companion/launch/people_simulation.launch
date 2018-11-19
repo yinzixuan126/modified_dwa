@@ -1,0 +1,29 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="empty"/>
+
+    <node pkg ="iri_people_simulation_companion"
+          type="iri_people_simulation_companion"
+          name="people_simulation_companion">
+      <param name="number_persons" value="1"/>
+      <param name="vis_mode"       value="True"/>
+      <param name="robot"          value="$(optenv ROBOT tibi)" />
+      <param name="destination_map_path" value="$(find iri_people_simulation_companion)/map/fme_open_destinations.txt" />
+      <!-- TODO change map with arg -->
+      <remap from="~tracks"        to="/$(optenv ROBOT tibi)/mht/tracks"/>
+      <remap from="~tracksMarkers" to="/$(optenv ROBOT tibi)/mht/tracksMarkers"/>
+     <!--   <remap from="~front_scan" to="/$(optenv ROBOT tibi)/sensors/front_laser_scan" />
+      <remap from="~rear_scan" to="/$(optenv ROBOT tibi)/sensors/rear_laser_scan" />
+       <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/move_base_params.yaml"      command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/local_costmap_params.yaml"  command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/akp_local_planner_params.yaml" command="load" /> 
+      <param name="AkpLocalPlanner/force_map_path"       value="$(find iri_akp_local_planner_companion)/maps/$(arg map)_forces.txt" />
+      <param name="AkpLocalPlanner/destination_map_path" value="$(find iri_akp_local_planner_companion)/maps/fme_open_destinations.txt" /> 
+      <param name="AkpLocalPlanner/robot" value="$(optenv ROBOT tibi)"/>-->
+    </node>
+
+</launch>

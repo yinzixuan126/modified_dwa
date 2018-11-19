@@ -1,0 +1,9 @@
+\subsubsection usage Usage
+\verbatim
+<node name="PlatformTeleopAlgorithm" pkg="iri_platform_teleop" type="PlatformTeleopAlgorithm">
+  <param name="inc_trans" type="double" value="0.1" />
+  <param name="inc_rot" type="double" value="0.1" />
+  <param name="check_human" type="bool" value="False" />
+</node>
+\endverbatim
+

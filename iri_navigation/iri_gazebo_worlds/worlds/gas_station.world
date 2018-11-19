@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="gas_station">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://gas_station</uri>
+      <name>gas_station</name>
+      <pose>0 0 0 0 0 0</pose> <!-- can't be moved, don't know why -->
+    </include>
+    <include>
+      <uri>model://dumpster</uri>
+      <name>dumpster</name>
+      <pose>8.0 0.0 0 0 0 0</pose>
+    </include>
+  </world>
+</sdf>

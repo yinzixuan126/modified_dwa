@@ -1,0 +1,116 @@
+Actual\ Pose.Enabled=1
+Actual\ Pose.Marker\ Topic=/trajectory_2_markers/ActualPoseMarker
+Actual\ Pose.Queue\ Size=0
+Background\ ColorB=0
+Background\ ColorG=0
+Background\ ColorR=0
+Camera\ Config=41.5769 9.69115 7.47398 0
+Camera\ Type=rviz::FixedOrientationOrthoViewController
+Covariances.Enabled=1
+Covariances.Marker\ Array\ Topic=/trajectory_2_markers/CovarianceMarkers
+Covariances.Queue\ Size=0
+Fixed\ Frame=/world
+Grid.Alpha=0.5
+Grid.Cell\ Size=5
+Grid.ColorB=0.5
+Grid.ColorG=0.5
+Grid.ColorR=0.5
+Grid.Enabled=1
+Grid.Line\ Style=0
+Grid.Line\ Width=0.03
+Grid.Normal\ Cell\ Count=0
+Grid.OffsetX=0
+Grid.OffsetY=0
+Grid.OffsetZ=0
+Grid.Plane=0
+Grid.Plane\ Cell\ Count=1000
+Grid.Reference\ Frame=<Fixed Frame>
+Laser\ Scans..AxisColorAutocompute\ Value\ Bounds=1
+Laser\ Scans..AxisColorAxis=2
+Laser\ Scans..AxisColorMax\ Value=10
+Laser\ Scans..AxisColorMin\ Value=-10
+Laser\ Scans..AxisColorUse\ Fixed\ Frame=1
+Laser\ Scans..FlatColorColorB=1
+Laser\ Scans..FlatColorColorG=1
+Laser\ Scans..FlatColorColorR=1
+Laser\ Scans..IntensityAutocompute\ Intensity\ Bounds=1
+Laser\ Scans..IntensityChannel\ Name=intensity
+Laser\ Scans..IntensityMax\ ColorB=0.333333
+Laser\ Scans..IntensityMax\ ColorG=0.611765
+Laser\ Scans..IntensityMax\ ColorR=1
+Laser\ Scans..IntensityMax\ Intensity=4096
+Laser\ Scans..IntensityMin\ ColorB=0
+Laser\ Scans..IntensityMin\ ColorG=0
+Laser\ Scans..IntensityMin\ ColorR=0
+Laser\ Scans..IntensityMin\ Intensity=0
+Laser\ Scans..IntensityUse\ full\ RGB\ spectrum=0
+Laser\ Scans.Alpha=0.03
+Laser\ Scans.Billboard\ Size=0.03
+Laser\ Scans.Color\ Transformer=FlatColor
+Laser\ Scans.Decay\ Time=0
+Laser\ Scans.Enabled=1
+Laser\ Scans.Position\ Transformer=XYZ
+Laser\ Scans.Queue\ Size=1
+Laser\ Scans.Selectable=0
+Laser\ Scans.Style=1
+Laser\ Scans.Topic=/trajectory_scans_2_pointcloud/laser_pointcloud
+Odometry.Angle\ Tolerance=0.1
+Odometry.ColorB=0
+Odometry.ColorG=0.835294
+Odometry.ColorR=0.109804
+Odometry.Enabled=0
+Odometry.Keep=0
+Odometry.Length=0.5
+Odometry.Position\ Tolerance=0.1
+Odometry.Topic=/vmc_navserver/odom
+Property\ Grid\ Splitter=808,78
+Property\ Grid\ State=expanded=.Global Options,Actual Pose.Enabled,Actual Pose.Namespaces,Trajectory.Enabled,Trajectory.Namespaces,Covariances.Enabled,Covariances.Namespaces,Laser Scans.Enabled,groundtruth.Enabled,Odometry.Enabled;splitterratio=0.569288
+QMainWindow=000000ff00000000fd00000003000000000000011d000003c8fc0200000001fb000000100044006900730070006c006100790073010000001d000003c8000000ee00ffffff0000000100000131000003c8fc0200000003fb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000001d000001240000006700fffffffb0000000a00560069006500770073000000001d000003c8000000bb00fffffffb0000001200530065006c0065006300740069006f006e000000001d0000037b0000006700ffffff00000003000004000000003efc0100000001fb0000000800540069006d0065000000000000000400000002bf00ffffff0000036b000003c800000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+Target\ Frame=/world
+Tool\ 2D\ Nav\ GoalTopic=/move_base_simple/goal
+Tool\ 2D\ Pose\ EstimateTopic=initialpose
+Trajectory.Enabled=1
+Trajectory.Marker\ Array\ Topic=/trajectory_2_markers/TrajectoryMarkers
+Trajectory.Queue\ Size=100
+groundtruth.Angle\ Tolerance=0.1
+groundtruth.ColorB=0
+groundtruth.ColorG=0.1
+groundtruth.ColorR=1
+groundtruth.Enabled=1
+groundtruth.Keep=0
+groundtruth.Length=0.5
+groundtruth.Position\ Tolerance=0.1
+groundtruth.Topic=/vmc_navserver/state
+[Actual Pose.]
+actual=1
+[Covariances.]
+positions=1
+[Display0]
+ClassName=rviz::GridDisplay
+Name=Grid
+[Display1]
+ClassName=rviz::MarkerDisplay
+Name=Actual Pose
+[Display2]
+ClassName=rviz::MarkerArrayDisplay
+Name=Trajectory
+[Display3]
+ClassName=rviz::MarkerArrayDisplay
+Name=Covariances
+[Display4]
+ClassName=rviz::PointCloud2Display
+Name=Laser Scans
+[Display5]
+ClassName=rviz::OdometryDisplay
+Name=groundtruth
+[Display6]
+ClassName=rviz::OdometryDisplay
+Name=Odometry
+[Trajectory.]
+loops=1
+trajectory=1
+[Window]
+Height=1026
+Width=1168
+X=-366
+Y=-1322

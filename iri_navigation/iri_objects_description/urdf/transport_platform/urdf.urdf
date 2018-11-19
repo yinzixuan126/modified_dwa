@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:property name="MESH" value="platform.stl" />
+  <xacro:property name="SIZE" value="0.135" />
+  
+  <xacro:macro name="platform_urdf">
+
+    <link name="base_footprint"/>
+
+    <link name="base_link">
+      <inertial>
+        <mass value="80.0" />
+        <origin xyz="0 0 0" />
+        <inertia 
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0" 
+          izz="1.0" />
+      </inertial>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iri_objects_description/meshes/${MESH}" scale="1 1 1"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iri_objects_description/meshes/${MESH}" scale="1 1 1"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+    </link>
+    
+    <joint name="base_footprint_to_base_link" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+    
+ <!--   <link name="tag_base">
+      <collision>
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/>
+        <geometry>
+          <box size="${2*SIZE} ${2*SIZE} 0.01"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 -0.005" rpy="0 0 0"/>
+        <geometry>
+          <box size="${2*SIZE} ${2*SIZE} 0.01"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+    </link>    
+
+    <joint name="base_link2tagbase" type="fixed">
+      <parent link="base_link"/>
+      <child link="tag_base"/>
+      <origin xyz="-0.5 0 0.4" rpy="${M_PI} ${-M_PI/2.0} 0"/>
+    </joint>
+    
+    <link name="tag">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${SIZE} ${SIZE} 0.01"/>
+        </geometry>
+      </collision>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iri_objects_description/urdf/tag/marker.dae" scale="${SIZE} ${SIZE} 1"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="tagbase2tag" type="fixed">
+      <parent link="tag_base"/>
+      <child link="tag"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>-->
+
+  </xacro:macro>
+
+</root>

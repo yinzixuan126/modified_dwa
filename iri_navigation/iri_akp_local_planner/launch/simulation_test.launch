@@ -1,0 +1,26 @@
+<!-- -->
+<launch>
+
+  <include file="$(find iri_akp_local_planner)/launch/model.launch" />
+
+  <include file="$(find iri_akp_tools)/launch/diff_platform_simulator.launch"/>
+  <include file="$(find iri_akp_tools)/launch/fake_laser_gen.launch"/>
+
+  <include file="$(find iri_akp_tools)/launch/fake_localization.launch"/>
+  
+  
+  <include file="$(find iri_akp_tools)/launch/map_server_local.launch">
+    <arg name="map" value="fme_open" />
+  </include>
+
+  <include file="$(find iri_people_simulation)/launch/people_simulation.launch">
+    <arg name="map" value="fme_open" />
+  </include>
+
+  <include file="$(find iri_akp_local_planner)/launch/tibi_dabo_akp_local.launch">
+    <arg name="map" value="fme_open"/>
+  </include>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find iri_akp_local_planner)/config/$(optenv ROBOT tibi).rviz" />
+
+</launch>

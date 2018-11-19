@@ -1,0 +1,57 @@
+<!-- -->
+<launch>
+
+<!-- 3 maps: empty, brl and fme_open , corridor, pasillo_simulation , empty_with_obstacles -->
+<!-- 3 maps: empty, brl and fme_open  -->
+<!-- 3 maps: empty, brl and fme_open  -->
+
+<!-- DABO -->
+
+
+  <include file="$(find iri_simulated_person_companion_akp_local_planner)/launch/model2.launch" />
+  <include file="$(find iri_akp_tools_companion)/launch/diff_platform_simulator2.launch"/>
+  <include file="$(find iri_akp_tools_companion)/launch/fake_laser_gen2.launch"/>
+  <include file="$(find iri_akp_tools_companion)/launch/fake_localization2.launch"/>
+  <include file="$(find iri_akp_tools_companion)/launch/map_server_local2.launch"> 
+    <arg name="map" value="empty_with_obstacles2" />  
+  </include>
+  <include file="$(find iri_simulated_person_companion_akp_local_planner)/launch/tibi_dabo_akp_local_sim2.launch">
+    <arg name="map" value="empty_with_obstacles2"/>  
+  </include>
+   <!-- 3 maps: empty, brl and fme_open , corridor  -->
+<!-- 3 maps: empty, brl and fme_open  -->
+<!--<include file="$(find iri_people_simulation_companion)/launch/people_simulation2.launch">
+    <arg name="map" value="pasillo_simulation" />  
+  </include> -->
+
+<!-- TIBI -->
+   <include file="$(find iri_akp_local_planner_companion)/launch/model.launch" /> 
+<!-- linea de abajo, carga el modelo del segundo robot, el que acompanya, no el central de la trajectoria. -->
+<!--  <include file="$(find iri_akp_local_planner_companion)/launch/model_robot_company.launch" /> -->
+  <include file="$(find iri_akp_tools_companion)/launch/diff_platform_simulator.launch"/>
+
+  <include file="$(find iri_akp_tools_companion)/launch/fake_laser_gen.launch"/>
+
+  <include file="$(find iri_akp_tools_companion)/launch/fake_localization.launch"/>
+    
+  <include file="$(find iri_akp_tools_companion)/launch/map_server_local.launch">
+    <arg name="map" value="empty_with_obstacles2" />   
+  </include>
+
+  <include file="$(find iri_akp_local_planner_companion)/launch/tibi_dabo_akp_local_sim.launch">
+    <arg name="map" value="empty_with_obstacles2"/>  
+  </include>
+
+ <!--<include file="$(find iri_people_simulation_companion)/launch/people_simulation.launch">
+    <arg name="map" value="pasillo_simulation" />  
+  </include> 
+
+MAPA ultimo que uso para obstaculos centrales:
+(bueno!!!) => empty_with_obstacles2
+
+  -->
+
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find iri_akp_local_planner_companion)/config/$(optenv ROBOT dabo).rviz" />
+
+</launch>

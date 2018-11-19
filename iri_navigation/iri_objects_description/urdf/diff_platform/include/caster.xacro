@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <xacro:property name="PI" value="3.1415926535897931" />
+
+  <xacro:macro name="caster" params="prefix parent *origin">
+
+    <link name="${prefix}_support">
+      <inertial>
+        <mass value="1"/>
+        <origin xyz="0 0 0" />
+        <inertia 
+          ixx="0.00375" ixy="0.0" ixz="0.0"
+          iyy="0.00375" iyz="0.0"
+          izz="0.00375" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <!--<mesh filename="package://iri_objects_description/meshes/caster_link.dae" scale="0.0254 0.0254 0.0254"/>-->
+          <box size="0.1 0.1 0.1"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <!--no collision-->
+    </link>
+
+    <joint name="${parent}_${prefix}_support_joint" type="continuous">
+      <xacro:insert_block name="origin" />      
+      <parent link="${parent}" />
+      <child link="${prefix}_support"/>
+      <axis xyz="0 0 1" />
+      <limit effort="0.1" velocity="100"/>
+      <dynamics damping="10"/>
+    </joint>
+
+    <transmission name="${prefix}_yaw_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${parent}_${prefix}_support_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}_yaw_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <link name="${prefix}_caster_wheel">
+      <inertial>
+        <mass value="2" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia
+          ixx="0.003" ixy="0.0" ixz="0.0"
+          iyy="0.00581" iyz="0.0"
+          izz="0.003" />
+      </inertial>
+      <visual>
+        <!--<origin xyz="0 0 0" rpy="0 0 0" />-->
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+        <geometry>
+          <!--<mesh filename="package://iri_objects_description/meshes/caster_wheel.dae" scale="0.0254 0.0254 0.0254"/>-->
+          <cylinder length="0.05" radius="0.0782"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+        <geometry>
+          <cylinder length="0.001" radius="0.0782"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_caster_wheel_joint" type="continuous">
+      <origin xyz="-0.0397 0 -0.0918" rpy="0 0 0" />
+      <parent link="${prefix}_support" />
+      <child link="${prefix}_caster_wheel" />
+      <axis xyz="0 1 0" />
+      <limit effort="1" velocity="100"/>
+      <dynamics damping="10"/>
+    </joint>
+
+    <transmission name="${prefix}_caster_wheel_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}_caster_wheel_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${prefix}_caster_wheel_motor">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <gazebo reference="${prefix}_support">
+      <material>Gazebo/Grey</material>
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <mu1>1</mu1>
+      <mu2>1</mu2>
+      <kp  value="1000000.0" />
+      <kd  value="1.0" />
+    </gazebo>
+
+    <gazebo reference="${parent}_${prefix}_support_joint">
+      <implicitSpringDamper>true</implicitSpringDamper>
+    </gazebo>
+
+    <gazebo reference="${prefix}_caster_wheel">
+      <material>Gazebo/Grey</material>
+      <gravity>true</gravity>
+      <self_collide>false</self_collide>
+      <mu1>1</mu1>
+      <mu2>1</mu2>
+      <kp  value="1000000.0" />
+      <kd  value="1.0" />
+    </gazebo>
+
+    <gazebo reference="${prefix}_caster_wheel_joint">
+      <implicitSpringDamper>true</implicitSpringDamper>
+    </gazebo>
+
+
+  </xacro:macro>
+</root>
+

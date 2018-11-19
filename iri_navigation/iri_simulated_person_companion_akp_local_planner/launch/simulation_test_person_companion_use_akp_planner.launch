@@ -1,0 +1,33 @@
+<!-- -->
+<launch>
+
+  <include file="$(find iri_simulated_person_companion_akp_local_planner)/launch/model.launch" />
+
+<!-- linea de abajo, carga el modelo del segundo robot, el que acompanya, no el central de la trajectoria. -->
+<!--  <include file="$(find iri_akp_local_planner_companion)/launch/model_robot_company.launch" /> -->
+
+  <include file="$(find iri_akp_tools_companion)/launch/diff_platform_simulator.launch"/>
+  <include file="$(find iri_akp_tools_companion)/launch/fake_laser_gen.launch"/>
+
+  <include file="$(find iri_akp_tools_companion)/launch/fake_localization.launch"/>
+  
+  
+  <include file="$(find iri_akp_tools_companion)/launch/map_server_local.launch">
+    <arg name="map" value="pasillo_simulation" />   <!-- 3 maps: empty, brl and fme_open , corridor  -->
+  </include>
+
+
+
+  <include file="$(find iri_simulated_person_companion_akp_local_planner)/launch/tibi_dabo_akp_local_sim.launch">
+    <arg name="map" value="pasillo_simulation"/>  <!-- 3 maps: empty, brl and fme_open  -->
+  </include>
+
+  <include file="$(find iri_people_simulation_companion)/launch/people_simulation.launch">
+    <arg name="map" value="pasillo_simulation" />  
+  </include>
+<!-- 3 maps: empty, brl and fme_open  -->
+
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find iri_simulated_person_companion_akp_local_planner)/config/$(optenv ROBOT tibi).rviz" />
+
+</launch>

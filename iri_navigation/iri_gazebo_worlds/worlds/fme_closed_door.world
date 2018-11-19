@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="fme">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://fme_closed_door</uri>
+      <name>fme_closed_door</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+  </world>
+</sdf>

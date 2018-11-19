@@ -1,0 +1,25 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="empty"/>
+
+  <include file="$(find tibi_dabo_base)/machines/$(optenv ROBOT tibi)_$(optenv ROS_MODE sim).machines" />
+
+  <!-- Map Server -->
+  <!-- published topics: /$(optenv ROBOT tibi)/map -->
+  <!-- subscribed topics: -->
+  <!-- service clients: -->
+  <!-- service servers: -->
+  <!-- action clients: -->
+  <!-- action servers: -->
+  <node name="$(optenv ROBOT tibi)_map_server" 
+        pkg ="map_server" 
+        type="map_server" 
+        machine="nav" 
+        args="$(find iri_akp_local_planner_companion)/maps/$(arg map).yaml">
+     <param name="frame_id" value="/map" />
+     <remap from="/map"
+              to="$(optenv ROBOT tibi)/map"/>
+  </node>
+  
+</launch>

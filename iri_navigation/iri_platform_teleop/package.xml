@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<package>
+  <name>iri_platform_teleop</name>
+  <version>1.0.0</version>
+  <description>Generic platform teleoperation node</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <!-- Example:  -->
+  <maintainer email="labrobotica@iri.upc.edu">labrobotica</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>LGPL</license>
+
+  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <url type="website">http://wiki.ros.org/iri_platform_teleop</url>
+
+  <!-- Author tags are optional, mutiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintianers, but could be -->
+  <!-- Example: -->
+  <author>Joan Perez</author>
+
+  <!-- The *_depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <!-- ****************************************************************** -->
+  <!--                 Place build dependencies here                      -->
+  <!-- ****************************************************************** -->
+  <build_depend>iri_base_algorithm</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>wiimote</build_depend>
+  <build_depend>iri_common_drivers_msgs</build_depend>
+
+  <!-- ****************************************************************** -->
+  <!--                   Place run dependencies here                      -->
+  <!-- ****************************************************************** -->
+  <run_depend>iri_base_algorithm</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>wiimote</run_depend>
+  <run_depend>iri_common_drivers_msgs</run_depend>
+
+  <!-- Use test_depend for packages you need only for testing: -->
+  <!--   <test_depend>gtest</test_depend> -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+  </export>
+</package>

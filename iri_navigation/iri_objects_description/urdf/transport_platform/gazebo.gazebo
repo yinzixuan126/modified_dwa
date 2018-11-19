@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="platform_gazebo">
+    
+    <gazebo>
+      <static>1</static>
+    </gazebo>
+    
+    <gazebo reference="base_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
+    <gazebo reference="base_footprint">
+      <!--<material>Gazebo/Red</material>-->
+      <!--     
+      <mu1>1</mu1>
+      <mu2>0</mu2>
+      -->
+    </gazebo>
+
+  </xacro:macro>
+
+
+</root>

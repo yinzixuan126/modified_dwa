@@ -1,0 +1,10 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~unsafe" : \b [bool] Not use the safe module min: False, default: False, max: True
+- \b "~min_dist" : \b [double] distance in meters where to stop min: 0.0, default: 0.4, max: 2.0
+- \b "~collision_time" : \b [double] time in seconds to compute collision min: 0.1, default: 1.0, max: 5.0
+- \b "~limit_vel_front" : \b [double] max speed in meters per second forward min: 0.0, default: 1.0, max: 2.0
+- \b "~limit_vel_rear" : \b [double] max speed in meters per second backward min: 0.0, default: 1.0, max: 2.0
+

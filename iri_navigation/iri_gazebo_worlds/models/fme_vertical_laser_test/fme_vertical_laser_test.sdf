@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <model name="fme_opened_door">
+    <static>true</static>
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://fme_vertical_laser_test/meshes/fme_vertical_laser_test.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://fme_vertical_laser_test/meshes/fme_vertical_laser_test.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,173 @@
+<!-- -->
+<!--
+  Need to add gazebo PATHS to iri_gazebo_worlds in your ~/.bashrc
+    source /usr/share/gazebo/setup.sh
+    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/iri-lab/iri_ws/src/iri_navigation/iri_gazebo_worlds/models
+    export GAZEBO_RESOURCE_PATH=$GAZEBO_RESOURCE_PATH:~/iri-lab/iri_ws/src/iri_navigation/iri_gazebo_worlds/models
+-->
+<launch>
+
+  <include file="$(find tibi_dabo_base)/machines/$(env ROBOT)_$(env ROS_MODE).machines" />
+
+  <!--sim-->
+<!--  <arg name="world" default="fme_opened_door"/>
+  <arg name="robot" default="$(optenv ROBOT tibi)" />
+  <arg name="robot_x"     default="11.5"/>
+  <arg name="robot_y"     default="7.3"/>
+  <arg name="robot_yaw"   default="0.0"/>-->
+
+
+ <arg name="world" default="fme_opened_door"/>
+  <arg name="robot" default="$(optenv ROBOT tibi)" />
+  <arg name="robot_x"     default="3"/>
+  <arg name="robot_y"     default="8"/>
+  <arg name="robot_yaw"   default="3.14"/>
+
+ <!-- <arg name="world" default="fme_opened_door"/>
+  <arg name="robot" default="$(optenv ROBOT tibi)" />
+  <arg name="robot_x"     default="-1.5"/>
+  <arg name="robot_y"     default="9.3"/>
+  <arg name="robot_yaw"   default="-1.57"/>-->
+
+
+  <include file="$(find tibi_dabo_gazebo)/launch/include/world.launch.xml">
+    <arg name="world" value="$(arg world)"/>
+  </include>
+
+
+  <include file="$(find tibi_dabo_gazebo)/launch/include/robot.launch.xml">
+    <arg name="robot" value="$(arg robot)"/>
+    <arg name="model" value="$(arg robot)_lasers"/> <!-- $(arg robot)_lasers_simple -->
+    <arg name="x"     value="$(arg robot_x)"/>
+    <arg name="y"     value="$(arg robot_y)"/>
+    <arg name="yaw"   value="$(arg robot_yaw)"/>
+  </include>
+
+
+ <!--
+  <include file="$(find tibi_dabo_gazebo)/launch/include/robot_simple.launch.xml">
+    <arg name="robot" value="$(arg robot)"/>
+    <arg name="model" value="$(arg robot)_lasers"/>
+    <arg name="x"     value="$(arg robot_x)"/>
+    <arg name="y"     value="$(arg robot_y)"/>
+    <arg name="yaw"   value="$(arg robot_yaw)"/>
+  </include>
+-->
+
+
+
+<!--
+<include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person1"/>
+    <arg name="type" value="person"/>
+    <arg name="x"     value="0.0"/>
+    <arg name="y"     value="9.0"/>
+    <arg name="yaw"   value="-1.57"/>
+  </include>
+-->
+
+<include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person1"/>
+    <arg name="type" value="person"/>
+    <arg name="x"     value="3.0"/>
+    <arg name="y"     value="6.5"/>
+    <arg name="yaw"   value="3.14"/>
+  </include>
+
+
+<!-- 
+  <include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person1"/>
+    <arg name="type" value="person_legs"/>
+    <arg name="x"     value="0.0"/>
+    <arg name="y"     value="7.0"/>
+    <arg name="yaw"   value="-1.57"/>
+  </include> -->
+
+<!--
+  <include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person2"/>
+    <arg name="type" value="person"/>
+    <arg name="x"     value="1.0"/>
+    <arg name="y"     value="3.5"/>
+    <arg name="yaw"   value="-1.57"/>
+  </include>
+
+<include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person3"/>
+    <arg name="type" value="person"/>
+    <arg name="x"     value="2.0"/>
+    <arg name="y"     value="3.5"/>
+    <arg name="yaw"   value="-1.57"/> 
+  </include>
+  
+
+<include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person4"/>
+    <arg name="type" value="person"/>
+    <arg name="x"     value="-2.0"/>
+    <arg name="y"     value="10.5"/>
+    <arg name="yaw"   value="-1.57"/>
+  </include>
+
+<include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person5"/>
+    <arg name="type" value="person"/>
+    <arg name="x"     value="-1.0"/>
+    <arg name="y"     value="10.5"/>
+    <arg name="yaw"   value="-1.57"/> 
+  </include> -->
+
+ <!-- <include file="$(find iri_objects_description)/launch/spawn_box.launch">
+    <arg name="name" value="box1"/>
+    <arg name="x"     value="-2.0"/>
+    <arg name="y"     value="0.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="length" value="2.0"/>
+    <arg name="width"  value="1.0"/>
+    <arg name="height" value="2.0"/>
+  </include>
+  
+ <include file="$(find iri_objects_description)/launch/spawn_box.launch">
+    <arg name="name" value="box2"/>
+    <arg name="x"     value="2.0"/>
+    <arg name="y"     value="0.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="length" value="2.0"/>
+    <arg name="width"  value="1.0"/>
+    <arg name="height" value="2.0"/>
+  </include> -->
+  <!--/sim-->
+
+  <!--nav-->
+  <include file="$(find iri_platform_teleop)/launch/tibi_dabo_teleop_safe_mux.launch"/>
+  <include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_cmd_vel_mux_direct.launch"/>
+  <!--<include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_velocity_smoother.launch"/>-->
+
+  <include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_amcl.launch">
+    <arg name="x" value="$(arg robot_x)"/>
+    <arg name="y" value="$(arg robot_y)"/>
+    <arg name="a" value="$(arg robot_yaw)"/>
+  </include>
+  <include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_map_server.launch">
+   <!-- <arg name="map" value="fme_open"/> -->
+   <arg name="map" value="sim/fme_open_obstacles_akp"/>
+  </include>
+  <!--<include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_move_base_dwa_mux.launch"/>--> <!-- ROS navigation -->
+  <include file="$(find iri_akp_local_planner_companion)/launch/akp.launch">
+    <arg name="map" value="fme_open"/> 
+  </include>
+  <!--/nav-->
+  
+  <!--people-->
+  <include file="$(find iri_laser_people_detection)/launch/tibi_dabo_lpd_map.launch"/>
+  <include file="$(find iri_laser_people_map_filter)/launch/tibi_dabo_laser_people_map_filter.launch"/>
+  <include file="$(find iri_people_tracking_mht)/launch/tibi_dabo_mht_map.launch"/>
+  <!--/people-->
+ 
+  <node name="rviz" pkg ="rviz" type="rviz" machine="monitor" 
+        args="-d $(find tibi_dabo_apps)/rviz/$(env ROBOT)_companion.rviz" />
+
+  <node name="dr" pkg ="rqt_reconfigure" type="rqt_reconfigure" machine="monitor"/>
+
+</launch>

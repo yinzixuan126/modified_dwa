@@ -1,0 +1,8 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~inc_trans" : \b [double] Translational platform velocity increment [m/s] min: 0.001, default: 0.1, max: 0.15
+- \b "~inc_rot" : \b [double] Rotational platform velocity increment [rad/s] min: 0.001, default: 0.1, max: 0.15
+- \b "~check_human" : \b [bool] Checks if a human is controlling the robot min: False, default: False, max: True
+

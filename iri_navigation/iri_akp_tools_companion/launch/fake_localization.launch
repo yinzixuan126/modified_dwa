@@ -1,0 +1,23 @@
+<!-- -->
+<launch>
+
+  <group ns="$(optenv ROBOT tibi)">
+
+    <node name="fake_localization"
+          pkg ="fake_localization"
+          type="fake_localization"
+          respawn="false" >
+      <param name="odom_frame_id"   value="/$(optenv ROBOT tibi)/odom" />
+      <param name="global_frame_id"   value="/map" />
+      <param name="base_frame_id"   value="/$(optenv ROBOT tibi)/base_footprint" />
+      <!-- parameters to change the robot initial position, if want the robot in -1 and -8=> delta_x=1.0 ; delta_y=8.0 -->
+      <param name="delta_x"   value="8.0" /> <!-- Normal position (estrechez mitad camino) = delta_x=1.0 ;  delta_y=2.0 ; delta_yaw=0.0 ANTES LEARNING= 1.0 paralearning= -15.0--> 
+      <param name="delta_y"   value="1.5" /> <!-- GIRO ESQUINA position (estrechez mitad camino)= delta_x=1.0 ;  delta_y=-15.0 ; delta_yaw=1.57 ANTES LEARNING= 1.5 paralearning= 0.0-->
+      <param name="delta_yaw" value="0.0" /> <!-- Normal position2_act_ultima (estrechez mitad camino) = delta_x=1.0 ;  delta_y=1.5 ; delta_yaw=0.0 ANTES LEARNING= 0.0 paralearning= 3.14-->
+      <remap from="/odom" to="/$(optenv ROBOT tibi)/segway/odom"/>
+      <remap from="base_pose_ground_truth" to="/$(optenv ROBOT tibi)/segway/odom"/>
+    </node>
+
+  </group>
+
+</launch>

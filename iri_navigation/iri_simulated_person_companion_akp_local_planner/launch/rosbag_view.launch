@@ -1,0 +1,20 @@
+<!-- -->
+
+<launch>
+<param name="/use_sim_time" value="True"/>
+	<node  pkg="rosbag" 
+        type="play" 
+        name="rosbag" 
+        args="--pause -r 1 --clock /home/gferrer/projects/haydn/social_navigation_ICRA2015/video/rosbag/2014-10-07-15-29-20.bag" />
+        
+<!-- tibi_dabo urdf model -->
+    <param name="robot_description" command="cat $(find tibi_dabo_base)/model/$(optenv ROBOT tibi)_base.urdf" />
+    
+  <node name="rviz" 
+        pkg="rviz" 
+        type="rviz"
+        args="-d $(find iri_akp_local_planner_companion)/config/test2.vcg" />
+
+</launch>
+
+

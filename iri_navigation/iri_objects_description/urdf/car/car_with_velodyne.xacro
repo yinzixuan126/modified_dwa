@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<robot name="$(arg name)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/car/urdf.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/car/gazebo.gazebo" />
+  <xacro:car_gazebo car_name="$(arg name)"/>
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/velodyne/sensor_vlp16.xacro" />
+  <xacro:VLP-16 parent="top" 
+                name="velodyne" 
+                frame_name="$(arg name)/velodyne" 
+                topic="velodyne_points">
+    <origin xyz="0 0 0.25" rpy="0 0 0"/>
+  </xacro:VLP-16>
+
+</robot>

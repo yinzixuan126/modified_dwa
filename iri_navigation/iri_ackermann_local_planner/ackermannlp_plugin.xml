@@ -1,0 +1,6 @@
+<library path="lib/libiri_ackermann_local_planner">
+  <class name="AckermannPlannerROS" type="AckermannPlannerROS" base_class_type="nav_core::BaseLocalPlanner">
+    <description>
+    </description>
+  </class>
+</library>

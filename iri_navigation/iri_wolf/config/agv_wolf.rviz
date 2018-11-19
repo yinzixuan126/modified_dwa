@@ -1,0 +1,452 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 108
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /TF1
+      Splitter Ratio: 0.5
+    Tree Height: 687
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.588679
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: FR Laser
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 1000
+      Reference Frame: odom
+      Value: true
+    - Angle Tolerance: 0.5
+      Class: rviz/Odometry
+      Color: 170; 17; 53
+      Enabled: true
+      Keep: 0
+      Length: 5
+      Name: Odometry
+      Position Tolerance: 1
+      Topic: /agv_odom_sim/odom
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 0; 0; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 0; 0; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: BL Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /agv/bl_lidar
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 85; 255; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: BR Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /agv/br_lidar
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 0; 255; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: FL Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /agv/fl_lidar
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 255; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: FR Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /agv/fr_lidar
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 0; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: SL Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /agv/sl_lidar
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 0; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: SR Laser
+      Position Transformer: XYZ
+      Queue Size: 10000
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.3
+      Style: Flat Squares
+      Topic: /agv/sr_lidar
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz/Axes
+      Enabled: false
+      Length: 1
+      Name: BL Laser
+      Radius: 0.1
+      Reference Frame: agv_bl_lidar
+      Value: false
+    - Class: rviz/Axes
+      Enabled: false
+      Length: 1
+      Name: BR Laser
+      Radius: 0.1
+      Reference Frame: agv_br_lidar
+      Value: false
+    - Class: rviz/Axes
+      Enabled: false
+      Length: 1
+      Name: FL Laser
+      Radius: 0.1
+      Reference Frame: agv_fl_lidar
+      Value: false
+    - Class: rviz/Axes
+      Enabled: false
+      Length: 1
+      Name: FR Laser
+      Radius: 0.1
+      Reference Frame: agv_fr_lidar
+      Value: false
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: SL Laser
+      Radius: 0.1
+      Reference Frame: agv_sl_lidar
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: SR Laser
+      Radius: 0.1
+      Reference Frame: agv_sr_lidar
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /iri_wolf/corners
+      Name: Landmarks
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /iri_wolf/lines
+      Name: Lines
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /iri_wolf/vehicle
+      Name: vehicle
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /iri_wolf/constraints
+      Name: Constraints
+      Namespaces:
+        /constraints: true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        agv_base_link:
+          Value: true
+        agv_bl_hinge:
+          Value: true
+        agv_bl_lidar:
+          Value: true
+        agv_bl_wheel:
+          Value: true
+        agv_br_hinge:
+          Value: true
+        agv_br_lidar:
+          Value: true
+        agv_br_wheel:
+          Value: true
+        agv_fl_hinge:
+          Value: true
+        agv_fl_lidar:
+          Value: true
+        agv_fl_wheel:
+          Value: true
+        agv_footprint:
+          Value: true
+        agv_fr_hinge:
+          Value: true
+        agv_fr_lidar:
+          Value: true
+        agv_fr_wheel:
+          Value: true
+        agv_fwd_mark:
+          Value: true
+        agv_platform:
+          Value: true
+        agv_sl_lidar:
+          Value: true
+        agv_sr_lidar:
+          Value: true
+        map:
+          Value: true
+        odom:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        map:
+          odom:
+            agv_footprint:
+              agv_base_link:
+                agv_platform:
+                  agv_bl_hinge:
+                    agv_bl_wheel:
+                      {}
+                  agv_bl_lidar:
+                    {}
+                  agv_br_hinge:
+                    agv_br_wheel:
+                      {}
+                  agv_br_lidar:
+                    {}
+                  agv_fl_hinge:
+                    agv_fl_wheel:
+                      {}
+                  agv_fl_lidar:
+                    {}
+                  agv_fr_hinge:
+                    agv_fr_wheel:
+                      {}
+                  agv_fr_lidar:
+                    {}
+                  agv_fwd_mark:
+                    {}
+                  agv_sl_lidar:
+                    {}
+                  agv_sr_lidar:
+                    {}
+      Update Interval: 0
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 80.0171
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 8.00208
+        Y: -16.1782
+        Z: 3.38148
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 0.6398
+      Target Frame: vehicle
+      Value: Orbit (rviz)
+      Yaw: 0.350456
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 998
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd00000004000000000000013c0000035cfc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000280000035c000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000035cfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000035c000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000006590000003efc0100000002fb0000000800540069006d0065010000000000000659000002f600fffffffb0000000800540069006d00650100000000000004500000000000000000000005170000035c00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1625
+  X: 45
+  Y: 14

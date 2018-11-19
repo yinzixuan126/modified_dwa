@@ -1,0 +1,53 @@
+<!-- Launches wolf node from TNO october'14 dataset-->
+
+<launch>
+
+    <!-- User Args  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-27-12-53-57.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-27-12-50-03.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-30-12-19-08.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-30-17-28-59.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-30-17-43-28.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-30-17-48-45.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-30-17-56-11.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-30-17-43-28.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-11-02-15-48-01.bag" />  -->
+    <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/at_201510/2015-11-02-15-48-01.bag" /> 
+    <arg name="rviz" default="true" /> 
+    
+    <!-- Set use_sim_time parameter in the parameter server-->
+    <param name="use_sim_time" value="true" />
+    
+    <!--Play the rosbag -->
+    <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args="-d 1 -s 10 -r 1 --clock --pause $(arg bag_file_name)">
+    </node>
+    
+    <!--WOLF-->
+    <node name="iri_wolf"
+        pkg="iri_wolf"
+        type="iri_wolf"
+        output="screen">
+        <param name="window_length" value="100"/>
+        <param name="new_frame_elapsed_time" value="2"/>
+        <param name="segment_window_length" value="0.5"/>
+        <param name="min_window_points" value="5"/>
+        <param name="k_sigmas_ut" value="5"/>
+        <param name="draw_lines" value="true"/>
+        <param name="n_lasers" value="1"/>
+        <param name="base_frame_name" value="at_base_link"/>
+        <param name="laser_0_frame_name" value="at_front_ibeo_layer7"/>
+        <remap from="~laser_0" to="/at_udp2ros_ibeo/scan_7"/>
+        <remap from="~odometry" to="/at_udp2ros_sdf/odom"/>
+    </node>
+    
+    <!--RESULTS VISUALIZATION-->
+    <group if="$(arg rviz)">
+        <node name="rviz"
+            pkg="rviz"
+            type="rviz" 
+            args="-d $(find iri_wolf)/config/volvo.rviz" />
+    </group>
+</launch>

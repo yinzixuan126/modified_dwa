@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+<!--POSE SLAM: filter manager 
+
+PARAMETERS:
+	
+	loop_rate: node loop rate (Default 20)
+	
+	Match Area: X, Y and Theta interval where a loop can be closed 
+		match_area_x (Default 3m)
+		match_area_y (Default 3m)
+		match_area_th (Default 0.26rad)
+	
+	pd_range_1: upper threshold of the probability of two poses of being in the match area -> loop closure attempt (Default 0.2)
+	
+	pd_range_2: upper threshold of the probability of two consecutive poses being in the match area -> redundant pose (Default 0.9)
+	
+	ig_range_1: lower threshold of information gain of a link -> redundant pose (Default 7.0)
+	
+	ig_range_2: upper threshold of information gain of a link -> loop closure attempt (Default 9.0)
+
+	Loop closure noise (if ICP is not providing it):
+		closing_loop_noise_xx (Default 0.05)
+		closing_loop_noise_xy (Default 0.0)
+		closing_loop_noise_xth (Default 0.00)
+		closing_loop_noise_xy (Default 0.0)
+		closing_loop_noise_yy (Default 0.05)
+		closing_loop_noise_yth (Default 0.0)
+		closing_loop_noise_xth (Default 0.0)
+		closing_loop_noise_yth (Default 0.0)
+		closing_loop_noise_thth (Default 0.0005)
+
+	min_cov: minimum covariance value (Default 1e-8)
+
+	initial robot position and covariance:
+		initial_position_x (Default 0.0)
+		initial_position_y (Default 0.0)
+		initial_position_th (Default 0.0)
+		initial_covariance_xx (Default 1e-3)
+		initial_covariance_xy (Default 0.0)
+		initial_covariance_xth (Default 0.0)
+		initial_covariance_xy (Default 0.0)
+		initial_covariance_yy (Default 1e-3)
+		initial_covariance_yth (Default 0.0)
+		initial_covariance_xth (Default 0.0)
+		initial_covariance_yth (Default 0.0)
+		initial_covariance_thth (Default 1e-5)
+
+TOPICS:
+
+	get_link: Service from where the node obtains new odometry links and asks for closing loops
+-->
+<node name="iri_poseslam"
+      pkg="iri_poseslam"
+      type="iri_poseslam"
+      output="screen">
+
+      <param name="~loop_rate"  value="10.0"/>
+      <param name="~match_area_x"  value="1.0"/>
+      <param name="~match_area_y"  value="1.0"/>
+      <param name="~match_area_th" value="0.2"/>
+
+      <param name="~pd_range_1" value="0.1"/>
+      <param name="~pd_range_2" value="0.9"/>
+      <param name="~ig_range_1" value="7.0"/>
+      <param name="~ig_range_2" value="9.0"/>
+
+      <param name="~closing_loop_noise_xx"   value="7.25483e-04"/>
+      <param name="~closing_loop_noise_xy"   value="-8.98881e-05"/>
+      <param name="~closing_loop_noise_xth"  value="5.23212e-05"/>
+      <param name="~closing_loop_noise_yy"   value="9.29614e-04"/>
+      <param name="~closing_loop_noise_yth"  value="-1.09644e-04"/>
+      <param name="~closing_loop_noise_thth" value="4.70196e-05"/>
+
+      <param name="~K_mahalanobis" value="10"/>
+
+      <param name="~ignore_previous_steps"   value="3"/>
+
+      <remap from="~get_link" to="/sensors_2_link/get_link"/>
+</node>
+
+
+<!-- /////////////////////////////////// SERVICES AND PUBLISHERS /////////////////////////////////// -->
+
+<!-- odom_2_odomrel: 
+	 Pose SLAM needs relative odometry measurements, this node converts the typical Odometry message to a relative odometry 
+
+PARAMETERS:
+	covariance_factor: noise factor of the odometry in m^2/m_travelled (Default 0.05)
+	
+TOPICS:
+	odom: Absolute odometry message topic
+-->
+<!--<node name="odom_2_odomrel"
+      pkg="iri_poseslam"
+      type="odom_2_odomrel"
+      output="screen">
+      <remap from="~odom" to="/teo/odom_publisher/odom" />
+
+      <param name="~covariance_factor"  value="0.05"/>
+</node>-->
+
+<!-- sensors_2_link: 
+	 Service node that handles all sensor data management and provides it to the pose_slam node 
+
+PARAMETERS:
+	online_mode: True: it computes the odometry by demmand integrating all odometry messages recieved until the present. 
+				 False: it provides one by one all the odometry messages (Default true)
+	
+	fusion_mode: for computing the odometry link: 	1 for fusing both messages as Gaussians
+				 (Default 2)						2 for taking the odometry message just as a prior for the ICP
+				 									3 for taking directly the odometry message
+
+	N_scans_discard: Number of laser scans discarded before providing a new one (Default 0)
+	
+	ICP_covariance_correction_factor: ICP node is overconfident with the covariances provided... (Default 100.0)
+	
+	base_frame_id: Frame_id of the vehicle
+	
+	laser_frame_id: Frame_id of the laser
+
+	allow_slipping: False: if command velocity is 0, the odometry is forced to be 0 (Default false)
+	
+TOPICS:
+	scan: Laser scan message topic
+	
+	cmd_vel: Absolute odometry message topic
+	
+	odom_relative: Relative odometry message topic
+	
+	get_relative_pose: ICP node service
+-->
+<node name="sensors_2_link"
+      pkg="iri_poseslam"
+      type="sensors_2_link"
+      output="screen">
+      <remap from="~scan" to="/teo/sensors/front_laser" />
+      <remap from="~cmd_vel" to="/teo/segway/cmd_vel" />
+      <remap from="~odom_relative" to="/teo/odom_rel" /> 
+      <remap from="~get_relative_pose" to="/iri_laser_icp/get_relative_pose" />
+
+      <param name="~fusion_mode"                      value="2"/>
+      <param name="~online_mode"                      value="true"/>
+      <param name="~ICP_covariance_correction_factor" value="100.0"/>
+      <param name="~N_scans_discard" value="5"/>
+      <param name="~base_frame_id"      value="/teo/base_link"/>
+      <param name="~laser_frame_id"       value="/teo/front_laser"/>
+</node>
+
+
+<!-- iri_laser_icp:
+	 ICP node returns a transformation between two laser scans 
+
+PARAMETERS: (see http://wiki.ros.org/laser_scan_matcher)
+-->
+<node name="iri_laser_icp"
+      pkg="iri_laser_icp"
+      type="iri_laser_icp"
+      output="log">
+    <param name="~max_angular_correction_deg" value="90"/>
+    <param name="~max_linear_correction"      value="3.0"/>
+    <param name="~max_iterations"             value="100"/>
+    <param name="~max_correspondence_dist"    value="3.0"/>
+    <param name="~clustering_threshold"       value="0.1"/>
+    <param name="~orientation_neighbourhood"  value="200"/>
+    <param name="~use_point_to_line_distance" value="0"/>
+    <param name="~use_corr_tricks"            value="1"/>
+    <param name="~restart"                    value="1"/>
+    <param name="~do_visibility_test"         value="0"/>
+    <param name="~do_compute_covariance"      value="1"/>
+    <param name="~epsilon_xy"                 value="1e-6"/>
+    <param name="~epsilon_theta"              value="1e-6"/>
+    <param name="~debug_verify_tricks"        value="0"/>
+    <param name="~outliers_adaptive_order"    value="0.8"/>
+    <param name="~min_laser_range"            value="0.2"/>
+    <param name="~max_laser_range"            value="1.0e10"/>
+</node>
+
+
+<!-- /////////////////////////////////// RESULTS VISUALIZATION /////////////////////////////////// -->
+<node name="rviz"
+      pkg="rviz"
+      type="rviz"
+      args="-d $(find iri_poseslam)/config/poseslam_occ.rviz" />
+
+<!-- trajectory_broadcaster:
+	 Tf transformations publisher 
+
+PARAMETERS:
+	odom_frame_id
+	
+	base_frame_id: Frame_id of the vehicle
+	
+	map_frame_id (Default "/map")
+	
+TOPICS:
+	trajectory: pose_slam node topic of the estimated trajectory
+-->
+<node name="trajectory_broadcaster"
+      pkg="iri_poseslam"
+      type="trajectory_broadcaster"
+      output="screen">
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" />
+      <param name="~odom_frame_id"      value="/teo/odom"/>
+      <param name="~base_frame_id"      value="/teo/base_link"/>
+      <param name="~map_frame_id"       value="/map"/>
+</node>
+
+<!-- trajectory_2_markers: 
+	 Publisher of markers that represents the estimated trajectory and its covariances and links 
+
+PARAMETERS:
+	line_color: Color of the trajectory line
+		line_color_r (Default 0.0)
+		line_color_g (Default 0.5)
+		line_color_b (Default 0.8)
+		line_color_a (Default 0.8)
+
+	line_width: Width of the trajectory line (Default 0.05)
+	
+	line_loop_color: Color of the loop lines
+		line_loop_color_r (Default 1)
+		line_loop_color_g (Default 0.8)
+		line_loop_color_b (Default 0.0)
+		line_loop_color_a (Default 0.5)
+
+	line_loop_width: Width of the loop lines (Default 0.07)
+	
+	current_marker_color: Color of the current robot pose covariance ellipsoid
+		current_marker_color_r (Default 0.8)
+		current_marker_color_g (Default 0.0)
+		current_marker_color_b (Default 1)
+		current_marker_color_a (Default 0.8)
+	
+	covariance_color: Color of the trajectory covariance ellipsoids
+		covariance_color_r (Default 0.0)
+		covariance_color_g (Default 0.5)
+		covariance_color_b (Default 0.8)
+		covariance_color_a (Default 0.5)
+	
+TOPICS:
+	trajectory: pose_slam node topic of the estimated trajectory
+-->
+<node name="trajectory_2_markers"
+      pkg="iri_poseslam"
+      type="trajectory_2_markers"
+      output="screen">
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" />
+</node>
+
+<!-- trajectory_scans_2_occgrid:
+	 Publisher of the occupancy grid computed from laser scans and the trajectory estimation 
+
+PARAMETERS:
+	max_n_cells: Maximum number of cells width of the occupancy grid (Default 1e9)
+
+	publish_redundant: True: Adds to the occupancy grid laser scans of redundant poses (Default false)
+
+	grid_size: Resolution of the grid (Default 0.5)
+
+	laser_ray_incr: Range resolution used for updating all rays of a scan (Default 0.1)
+
+	p_free: Probability of a cell to be free after a ray pass thru it once (Default 0.3)
+	
+	p_obst: Probability of a cell to be obstacle after a ray cast in it once (Default 0.8)
+
+	p_thres_free: Probability threshold of a cell to be labeled free (Default 0.2)
+
+	p_thres_obst: Probability threshold of a cell to be labeled obstacle (Default 0.7);
+
+	base_frame_id
+
+	laser_frame_id
+	
+TOPICS:
+	scan: Laser scan message topic
+	
+	trajectory: pose_slam node topic of the estimated trajectory
+-->
+<node name="trajectory_scans_2_occgrid"
+      pkg="iri_poseslam"
+      type="trajectory_scans_2_occgrid"
+      output="screen">
+      <remap from="~scan" to="/teo/sensors/front_laser" />
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" /> 
+
+      <param name="~publish_redundant"  value="true"/>
+      <param name="~grid_size"  value="0.1"/>
+      <param name="~base_frame_id"      value="/teo/base_link"/>
+      <param name="~laser_frame_id"       value="/teo/front_laser"/>
+</node>
+
+
+<!-- trajectory_scans_2_pointcloud: 
+	 Publisher of a pointcloud of all accumulated laser scans reallocated due to the trajectory estimation 
+
+PARAMETERS:
+	publish_redundant: True: Add to the pointcloud the scans of redundant poses (Default false)
+
+	base_frame_id
+
+	laser_frame_id
+	
+TOPICS:
+	scan: Laser scan message topic
+	
+	trajectory: pose_slam node topic of the estimated trajectory
+-->
+<!--<node name="trajectory_scans_2_pointcloud"
+      pkg="iri_poseslam"
+      type="trajectory_scans_2_pointcloud"
+      output="screen">
+      <remap from="~scan" to="/teo/sensors/front_laser" />
+      <remap from="~trajectory" to="/iri_poseslam/trajectory" />
+
+      <param name="~publish_redundant"  value="false"/>
+      <param name="~base_frame_id"      value="/teo/base_link"/>
+      <param name="~laser_frame_id"       value="/teo/front_laser"/>
+</node>-->
+
+<!-- /////////////////////////////////// ROSBAG PLAY /////////////////////////////////// -->
+
+<param name="use_sim_time" value="true" />
+
+<node pkg="rosbag"
+      type="play"
+      name="rosbag"
+      args="-d 5 --clock -r 1 -k $(find iri_poseslam)/data/test_indoor.bag"/>
+</launch>

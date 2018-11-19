@@ -1,0 +1,46 @@
+<launch>
+
+    <!-- User Args  -->
+    <!--<arg name="bag_file_name" default="/home/jvallve/bags/simulation/agv_gazebo_2015-10-23-15-58-24.bag" /> -->
+    <arg name="bag_file_name" default="/home/jvallve/bags/simulation/agv_gazebo_2015-10-23-18-19-44.bag" /> 
+    <arg name="model" default="$(find agv_description)/urdf/agv.xacro"/> 
+    <arg name="rviz" default="true" /> 
+    
+    <!-- Set use_sim_time parameter in the parameter server-->
+    <param name="use_sim_time" value="true" />
+    
+    <!--Play the rosbag -->
+    <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args="-d 1 -s 20 -r 1 --pause --clock $(arg bag_file_name)">
+    </node>
+    
+    <!--WOLF-->
+    <node name="iri_wolf"
+        pkg="iri_wolf"
+        type="iri_wolf"
+        output="screen">
+        <param name="window_length" value="50"/>
+        <param name="new_frame_elapsed_time" value="5"/>
+        <param name="segment_window_length" value="0.5"/>
+        <param name="min_window_points" value="5"/>
+        <param name="k_sigmas_ut" value="2"/>
+        <param name="draw_lines" value="false"/>
+        <param name="n_lasers" value="2"/>
+        <param name="laser_0_frame_name" value="agv_sl_lidar"/>
+        <param name="laser_1_frame_name" value="agv_sr_lidar"/>
+        <remap from="~odometry" to="/agv_odom_sim/odom"/>
+        <remap from="~laser_0" to="/agv/sl_lidar"/>
+        <remap from="~laser_1" to="/agv/sr_lidar"/>
+    </node>
+    
+    <!--RESULTS VISUALIZATION-->
+    <group if="$(arg rviz)">
+        <node name="rviz"
+            pkg="rviz"
+            type="rviz" 
+            args="-d $(find iri_wolf)/config/agv_wolf_sim.rviz" />
+    </group>
+
+</launch>

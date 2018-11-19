@@ -1,0 +1,49 @@
+Background\ ColorB=1
+Background\ ColorG=0
+Background\ ColorR=0
+Camera\ Config=0.686 0.697812 10.3697 -4.52046 -4.02541 -4.3958
+Camera\ Type=rviz::OrbitViewController
+Fixed\ Frame=/base_link
+Grid.Alpha=0.5
+Grid.Cell\ Size=1
+Grid.ColorB=0
+Grid.ColorG=0
+Grid.ColorR=0
+Grid.Enabled=1
+Grid.Line\ Style=0
+Grid.Line\ Width=0.03
+Grid.Normal\ Cell\ Count=0
+Grid.OffsetX=0
+Grid.OffsetY=0
+Grid.OffsetZ=0
+Grid.Plane=0
+Grid.Plane\ Cell\ Count=43
+Grid.Reference\ Frame=<Fixed Frame>
+Property\ Grid\ Splitter=500,78
+Property\ Grid\ State=expanded=.Global Options,Grid.Enabled,Tibi.Enabled;splitterratio=0.5
+QMainWindow=000000ff00000000fd00000003000000000000011d0000028bfc0200000001fb000000100044006900730070006c00610079007301000000190000028b000000c300ffffff00000001000001310000028bfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000019000000a70000005100fffffffb0000000a0056006900650077007301000000c600000131000000a100fffffffb0000001200530065006c0065006300740069006f006e01000001fd000000a70000005100ffffff00000003000005150000003efc0100000001fb0000000800540069006d00650100000000000005150000021400ffffff000002bb0000028b00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+Robot\:\ Tibi\ Link\ base_linkAlpha=1
+Robot\:\ Tibi\ Link\ base_linkEnabled=1
+Robot\:\ Tibi\ Link\ base_linkShow\ Axes=0
+Robot\:\ Tibi\ Link\ base_linkShow\ Trail=0
+Target\ Frame=<Fixed Frame>
+Tibi.Alpha=1
+Tibi.Collision\ Enabled=0
+Tibi.Enabled=1
+Tibi.Robot\ Description=robot_description
+Tibi.TF\ Prefix=
+Tibi.Update\ Interval=0
+Tibi.Visual\ Enabled=1
+Tool\ 2D\ Nav\ GoalTopic=/goal
+Tool\ 2D\ Pose\ EstimateTopic=initialpose
+[Display0]
+ClassName=rviz::GridDisplay
+Name=Grid
+[Display1]
+ClassName=rviz::RobotModelDisplay
+Name=Tibi
+[Window]
+Height=780
+Width=1317
+X=-8
+Y=-28

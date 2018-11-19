@@ -1,0 +1,141 @@
+<!-- -->
+<launch>
+
+<param name="use_sim_time" value="true"/>
+
+    <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args=" --clock --pause -l $(find iri_akp_local_planner_companion)/results_akp_companion_real_rosbag/2017-03-01-12-28-56.bag"/> 
+
+<!-- Rosbags akp_companion!!! (paper IROS2017) -->
+<!--
+
+1) 2017-03-01-11-18-33.bag  // solo fernando y solo.
+
+2) 2017-03-01-11-50-31.bag // caso1 obstaculo, con Fernando, no tiene video.
+
+3) 2017-03-01-11-51-57.bag // caso1 obstaculo, malo con Fernando, no tiene video.
+
+4) 2017-03-01-11-54-03.bag // caso 1, bueno, regular Alex, creo... el primero.
+
+5) 2017-03-01-11-57-58.bag  // caso 1, (malo pq Alex se intenta ir por el lado)
+
+6) 2017-03-01-11-59-39.bag  // caso 1,  bueno! Alex.
+
+7) 2017-03-01-12-00-54.bag  // caso 1,  bueno! Alex.
+
+8) 2017-03-01-12-02-24.bag  // caso 1,  bueno! Alex.
+
+9) 2017-03-01-12-03-19.bag // caso 1, bueno! Alex.
+
+10) 2017-03-01-12-04-29.bag // caso 1, Alex se va por camino que no toca. (no usable, en IROS2017 paper)
+
+11) 2017-03-01-12-05-33.bag // caso 1, bueno/regular... y al principio sobra parte del rosbag.
+
+12) 2017-03-01-12-08-29.bag // caso 1, BUENO
+
+13) 2017-03-01-12-12-20.bag // caso 1, regular...
+
+14) 2017-03-01-12-14-53.bag // MALO
+
+15) 2017-03-01-12-15-32.bag // caso 1, bueno! joan (VIDEO BUENO!!!) ( video real: MAH08829.MP4) El a usar en los videos de IROS2017
+
+16) 2017-03-01-12-16-37.bag  // caso 1, bueno! (v3) joan (izquierda) ( video real: MAH08830.MP4)
+
+17) 2017-03-01-12-18-36.bag // MALO
+
+18) 2017-03-01-12-19-45.bag // MALO
+
+19) 2017-03-01-12-21-46.bag  // caso 1, MAlo! obstaculo joan (v4) ( video real: MAH08833.MP4 )
+ 
+20) 2017-03-01-12-28-56.bag // caso 3, MUY bien!!! ( video real: MAH08835.MP4). El a usar en los videos de IROS2017
+
+21) 2017-03-01-12-31-19.bag // MALO
+
+22) 2017-03-01-12-32-35.bag // MALO
+
+23) 2017-03-01-12-33-49.bag  //caso 3, MUY bien!!! ( video real: MAH08837.MP4)
+
+24) 2017-03-01-12-35-10.bag  // MALO, el k me sature!  ( video real:  MAH08839.MP4 )
+
+25) 2017-03-01-12-41-08.bag  // caso 3, pasable... solo un poco mal al final. ( video real: MAH08840.MP4 )
+
+26) 2017-03-01-12-42-44.bag  // MALO
+
+27) 2017-03-01-12-43-32.bag   // caso 4, bueno!  ( video real: MAH08841.MP4 )  El a usar en los videos de IROS2017
+
+28) 2017-03-01-12-49-57.bag  // caso 4, regular tirando a malo... ( video real: MAH08843.MP4)
+
+29) 2017-03-01-12-56-40.bag // caso 2, regular/medio malo, se aleja demasiado (le atascan entre personas). ( video real: MAH08844.MP4)
+
+30) 2017-03-01-12-57-50.bag // caso 2, regular/final malo, se aleja demasiado. ( video real: MAH08845.MP4)
+
+31) 2017-03-01-12-58-53.bag // caso 4, malo! cruze id's entre Alex's. ( video real: MAH08846.MP4)
+
+32) 2017-03-01-13-01-16.bag //caso4 raro de cruzes bruscos, no sirven datos pq fastidian demasiado al robot ( video real: MAH08847.MP4)
+
+33) 2017-03-01-13-03-38.bag  //caso2 (video 8848.MP4, grupo de personas 3, personas y 2 personas vista rara) Bueno.  El a usar en los videos de IROS2017
+
+-->
+   
+
+  <arg name="map" default="2" />
+
+  <!-- load robot defined machines -->
+
+  <include file="$(find tibi_dabo_base)/machines/$(optenv ROBOT tibi)_$(env ROS_MODE).machines" />
+  <rosparam command="delete" ns="/$(optenv ROBOT tibi)/move_base" />
+
+
+<!-- roslaunch iri_akp_local_planner_companion model_robot_company.launch -->
+ <include file="$(find iri_akp_local_planner_companion)/launch/model_robot_company.launch"/>
+
+ <group ns="$(optenv ROBOT tibi)"> 
+
+ 
+ 
+
+<!-- iri_akp_local_planner_companion (remap) -->
+    <!--launch-prefix="xterm -e ddd -args" -->
+    <node pkg ="move_base"
+          type="move_base"
+          name="move_base2"
+          machine="nav"
+          output="screen">
+      <remap from="/$(optenv ROBOT tibi)/cmd_vel"
+              to="/$(optenv ROBOT tibi)/navigation/cmd_vel2" />
+      <remap from="/$(optenv ROBOT tibi)/odom"
+              to="/$(optenv ROBOT tibi)/segway/odom" />
+      <remap from="/$(optenv ROBOT tibi)/front_scan"
+              to="/$(optenv ROBOT tibi)/sensors/front_laser_scan" />
+      <remap from="/$(optenv ROBOT tibi)/rear_scan"
+              to="/$(optenv ROBOT tibi)/sensors/rear_laser_scan" />
+     <!-- <remap from="/$(optenv ROBOT tibi)/tracks"
+               to="/$(optenv ROBOT tibi)/mht/tracks" /> -->
+      <remap from="/$(optenv ROBOT tibi)/tracks"
+               to="/$(optenv ROBOT tibi)/mht_2/tracks" />
+      <remap from="/$(optenv ROBOT tibi)/move_base2/goal"
+               to="/$(optenv ROBOT tibi)/move_base/goal" />
+      <remap from="/$(optenv ROBOT tibi)/planner_markers"
+               to="/$(optenv ROBOT tibi)/planner_markers2" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/move_base_params.yaml"      command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/local_costmap_params.yaml"  command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/akp_local_planner_params.yaml" command="load" />
+      <!--<param name="AkpLocalPlanner/force_map_path"       value="$(find iri_akp_local_planner)/maps/$(arg map)_forces.txt" />-->
+      <param name="AkpLocalPlanner/destination_map_path" value="$(find iri_akp_local_planner_companion)/maps/$(arg map)_destinations.txt" />
+      <param name="AkpLocalPlanner/results_filename" value="$(env HOME)/iri-lab/labrobotica/restricted/algorithms/people_prediction/branches/ely_people_prediction_companion_robot/data_results/results_robot.txt" />
+      <param name="AkpLocalPlanner/debug_filename" value="$(env HOME)/iri-lab/labrobotica/restricted/algorithms/people_prediction/branches/ely_people_prediction_companion_robot/data_results/debug_robot.txt" />
+      <param name="AkpLocalPlanner/robot" value="$(optenv ROBOT tibi)"/>
+    </node>
+
+  </group>
+
+
+ <node name="rviz" pkg="rviz" type="rviz" args="-d $(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi).rviz" />
+
+
+</launch>

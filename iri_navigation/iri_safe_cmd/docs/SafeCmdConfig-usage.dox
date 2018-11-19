@@ -1,0 +1,11 @@
+\subsubsection usage Usage
+\verbatim
+<node name="SafeCmdAlgorithm" pkg="iri_safe_cmd" type="SafeCmdAlgorithm">
+  <param name="unsafe" type="bool" value="False" />
+  <param name="min_dist" type="double" value="0.4" />
+  <param name="collision_time" type="double" value="1.0" />
+  <param name="limit_vel_front" type="double" value="1.0" />
+  <param name="limit_vel_rear" type="double" value="1.0" />
+</node>
+\endverbatim
+

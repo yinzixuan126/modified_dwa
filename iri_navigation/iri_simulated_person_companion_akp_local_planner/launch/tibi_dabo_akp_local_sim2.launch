@@ -1,0 +1,53 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="fme_open2" />
+
+  <rosparam command="delete" ns="/$(optenv ROBOT dabo)/move_base" />
+
+  <group ns="$(optenv ROBOT dabo)"> 
+
+    <!--launch-prefix="xterm -e ddd -args" -->
+  <!--output="screen"-->
+    <node pkg ="move_base"
+          type="move_base"
+          name="move_base2"
+	  output="screen">
+      <param name="number_persons" value="1"/>
+      <param name="vis_mode"       value="True"/>
+      <param name="destination_map_path" value="$(find iri_simulated_person_companion_akp_local_planner)/map/fme_open_destinations.txt" />
+      <remap from="/$(optenv ROBOT dabo)/cmd_vel"
+              to="/$(optenv ROBOT dabo)/segway/cmd_vel" />
+      <remap from="/$(optenv ROBOT dabo)/odom"
+              to="/$(optenv ROBOT dabo)/segway/odom" />
+      <remap from="/$(optenv ROBOT dabo)/odom_tibi"
+              to="/$(optenv ROBOT tibi)/segway/odom" />
+      <remap from="/$(optenv ROBOT dabo)/front_scan"
+              to="/$(optenv ROBOT dabo)/sensors/front_laser_scan" />
+      <remap from="/$(optenv ROBOT dabo)/rear_scan"
+              to="/$(optenv ROBOT dabo)/sensors/rear_laser_scan" />
+      <remap from="/$(optenv ROBOT dabo)/tracks"
+               to="/$(optenv ROBOT tibi)/mht/tracks" />
+      <remap from="~tracksMarkers" to="/$(optenv ROBOT tibi)/mht/tracksMarkers"/>
+      <remap from="/$(optenv ROBOT dabo)/cmd_vel_stop" 
+               to="/turtlebot_teleop_keyboard/cmd_vel2"/> 
+      <remap from="/$(optenv ROBOT dabo)/status_init" 
+               to="/tibi/status_init"/> 
+      <remap from="/$(optenv ROBOT dabo)/init_simulations" 
+               to="/tibi/init_simulations"/> 
+      <!--<remap from="/$(optenv ROBOT dabo)/mht/tracks"        to="/$(optenv ROBOT tibi)/mht/tracks"/> -->
+      <rosparam file="$(find iri_simulated_person_companion_akp_local_planner)/config/$(optenv ROBOT dabo)/move_base_params.yaml"      command="load" />
+      <rosparam file="$(find iri_simulated_person_companion_akp_local_planner)/config/$(optenv ROBOT dabo)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find iri_simulated_person_companion_akp_local_planner)/config/$(optenv ROBOT dabo)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find iri_simulated_person_companion_akp_local_planner)/config/$(optenv ROBOT dabo)/local_costmap_params.yaml"  command="load" />
+      <rosparam file="$(find iri_simulated_person_companion_akp_local_planner)/config/$(optenv ROBOT dabo)/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find iri_simulated_person_companion_akp_local_planner)/config/$(optenv ROBOT dabo)/akp_local_planner_params.yaml" command="load" />
+      <!--<param name="AkpLocalPlanner/force_map_path"       value="$(find iri_akp_local_planner)/maps/$(arg map)_forces.txt" />-->
+      <param name="AkpLocalPlanner/robot_sim_comp_pers_name"                            value="$(optenv ROBOT dabo)"/>      
+      <param name="AkpLocalPlanner/destination_map_path" value="$(find iri_simulated_person_companion_akp_local_planner)/maps/fme_open_destinations.txt" />
+      <param name="AkpLocalPlanner/robot" value="$(optenv ROBOT dabo)"/>
+    </node>
+
+  </group>
+
+</launch>

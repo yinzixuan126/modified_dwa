@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- -->
+<launch>
+
+  <arg name="ns"            default="$(optenv ROBOT myrobot)"/>
+  <arg name="config_file"   default="$(find iri_safe_cmd)/param/sample.yaml" />
+  <arg name="node_name"     default="iri_safe_cmd" />
+  <arg name="output"        default="screen" />
+  <arg name="launch_prefix" default="" />
+  
+  <node pkg ="iri_safe_cmd"
+        type="iri_safe_cmd"
+        name="$(arg node_name)"
+        ns="$(arg ns)"
+        output="$(arg output)"
+        launch-prefix="$(arg launch_prefix)">
+    <rosparam file="$(arg config_file)" command="load" />
+    <param name="base_frame" value="$(arg ns)/base_link" />
+    <remap from="~cmd_vel_safe" to="/$(arg ns)/cmd_vel"/>
+    <remap from="~cmd_vel"      to="/$(arg ns)/cmd_vel_unsafe"/>
+    <remap from="~rear_laser"   to="/$(arg ns)/sensors/rear_laser_scan"/>
+    <remap from="~front_laser"  to="/$(arg ns)/sensors/front_laser_scan"/>
+    <remap from="~joy"          to="/$(arg ns)/joy"/>
+  </node>
+
+</launch>

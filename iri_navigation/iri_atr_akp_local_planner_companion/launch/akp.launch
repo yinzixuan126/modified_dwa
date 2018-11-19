@@ -1,0 +1,62 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="2" />
+
+  <!-- load robot defined machines -->
+  <include file="$(find tibi_dabo_base)/machines/$(optenv ROBOT tibi)_$(env ROS_MODE).machines" />
+  <rosparam command="delete" ns="/$(optenv ROBOT tibi)/move_base" />
+
+  <group ns="$(optenv ROBOT tibi)"> 
+
+    <!--launch-prefix="xterm -e ddd -args" -->
+    <node pkg ="move_base"
+          type="move_base"
+          name="move_base"
+          machine="visio"
+          output="screen">
+      <remap from="/$(optenv ROBOT tibi)/cmd_vel"
+              to="/$(optenv ROBOT tibi)/navigation/cmd_vel_unsafe" />
+      <remap from="/$(optenv ROBOT tibi)/odom"
+              to="/$(optenv ROBOT tibi)/segway/odom" />
+      <remap from="/$(optenv ROBOT tibi)/front_scan"
+              to="/$(optenv ROBOT tibi)/sensors/front_laser_scan" />
+      <remap from="/$(optenv ROBOT tibi)/rear_scan"
+              to="/$(optenv ROBOT tibi)/sensors/rear_laser_scan" />
+      <remap from="/$(optenv ROBOT tibi)/tracks"
+               to="/$(optenv ROBOT tibi)/mht/tracks" />
+      <rosparam file="$(find iri_atr_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/move_base_params.yaml"      command="load" />
+      <rosparam file="$(find iri_atr_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find iri_atr_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find iri_atr_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/local_costmap_params.yaml"  command="load" />
+      <rosparam file="$(find iri_atr_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find iri_atr_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/akp_local_planner_params.yaml" command="load" />
+      <!--<param name="AkpLocalPlanner/force_map_path"       value="$(find iri_akp_local_planner)/maps/$(arg map)_forces.txt" />-->
+      <param name="AkpLocalPlanner/destination_map_path" value="$(find iri_atr_akp_local_planner_companion)/maps/fme_open_destinations_brl_big.txt" />
+      <param name="AkpLocalPlanner/results_filename_Zanlungo" value="$(env HOME)/akp/results_icra/results_robot.txt" />
+      <param name="AkpLocalPlanner/debug_filename" value="$(env HOME)/iri-lab/labrobotica/restricted/algorithms/people_prediction/branches/ely_people_prediction_companion_robot/data_results/debug_robot.txt" />
+      <param name="AkpLocalPlanner/robot" value="$(optenv ROBOT tibi)"/>
+    </node>
+
+
+   <node pkg="iri_safe_cmd"
+          type="iri_safe_cmd"
+          name="iri_safe_cmd"
+          machine="nav">
+      <param name="unsafe"          type="bool"   value="false"/>
+      <param name="min_dist"        type="double" value="0.3"/>
+      <param name="collision_time"  type="double" value="1.5"/>
+      <param name="limit_vel_front" type="double" value="1.0"/>
+      <param name="limit_vel_rear"  type="double" value="1.0"/>
+      <param name="front_laser_watchdog_time" type="double" value="1.0"/>
+      <param name="rear_laser_watchdog_time"  type="double" value="1.0"/>
+      <remap from="~cmd_vel_safe" to="/$(env ROBOT)/navigation/cmd_vel"/>
+      <remap from="~cmd_vel"      to="/$(env ROBOT)/navigation/cmd_vel_unsafe"/>
+      <remap from="~rear_laser"   to="/$(env ROBOT)/sensors/rear_laser_scan"/>
+      <remap from="~front_laser"  to="/$(env ROBOT)/sensors/front_laser_scan"/>
+      </node>
+  </group>
+
+  </group>
+
+</launch>

@@ -1,0 +1,28 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="fme_open2" />
+
+
+<!-- definida en el .bashrc, si quiero que use las dos diferentes, he de quitar la definicion que tengo en el bashrc-->
+
+    <!--launch-prefix="xterm -e ddd -args" -->
+  <!--output="screen"-->
+ <node pkg ="iri_fusion_tracks_akp_people_simulation"
+        type="iri_fusion_tracks_akp_people_simulation"
+        name="fusion_tracks_people_sim"> 
+    <remap from="/fusion_tracks_people_sim/dabo1_tracks"
+              to="/dabo/tracks" /> 
+    <remap from="/fusion_tracks_people_sim/dabo2_tracks"
+              to="/dabo2/tracks" />
+    <remap from="/fusion_tracks_people_sim/fusion_simulated_people_tracks"
+               to="/$(optenv ROBOT tibi)/mht/tracks" />
+      <remap from="/fusion_tracks_people_sim/MarkerArray_out_people_tracks" to="/$(optenv ROBOT tibi)/mht/tracksMarkers"/>   
+              
+ <!-- People Tracking MHT parameters for outdoor environments with few false alarms-->
+  <!-- 	<param name="~/frame_id"  type="string" value="/tibi/base_footprint" /> -->
+    <param name="id_person_companion_dabo" type="int"   value="1"/>
+    <param name="id_person_companion_dabo2" type="int"   value="3"/>
+  </node>
+
+</launch>

@@ -1,0 +1,41 @@
+<!-- Launches wolf node from TNO october'14 dataset-->
+
+<launch>
+
+    <!-- User Args  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-27-12-53-57.bag" />  -->
+    <!-- <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/2015-10-27-12-50-03.bag" />  -->
+    <arg name="bag_file_name" default="/home/jvallve/bags/Volvo/at_201510/2015-10-30-12-19-08.bag" /> 
+    
+    <!-- Set use_sim_time parameter in the parameter server-->
+    <param name="use_sim_time" value="true" />
+    
+    <!--Play the rosbag -->
+    <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args="-d 1 -s 10 -r 1 --clock $(arg bag_file_name)">
+    </node>
+    
+    <!--WOLF-->
+    <node name="iri_wolf"
+        pkg="iri_wolf"
+        type="iri_wolf"
+        output="screen">
+        <param name="window_length" value="500"/>
+        <param name="new_frame_elapsed_time" value="2"/>
+        <param name="segment_window_length" value="0.5"/>
+        <param name="min_window_points" value="5"/>
+        <param name="k_sigmas_ut" value="1"/>
+        <param name="draw_lines" value="false"/>
+        <param name="n_lasers" value="0"/>
+        <remap from="~odometry" to="/udp2ros_node/odom"/>
+    </node>
+    
+    <!--RESULTS VISUALIZATION-->
+    <node name="rviz"
+        pkg="rviz"
+        type="rviz" 
+        args="-d $(find iri_wolf)/config/volvo_odom.rviz" />
+
+</launch>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="car_gazebo" params="car_name">
+    <gazebo>
+      <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+        <robotNamespace>${car_name}</robotNamespace>
+        <commandTopic>cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>/${car_name}/odom</odometryFrame>
+        <robotBaseFrame>/${car_name}/base_footprint</robotBaseFrame>
+        <odometryRate>20.0</odometryRate>
+      </plugin>
+    </gazebo>
+
+    <gazebo reference="body">
+      <material>Gazebo/Grey</material>
+      <mu1>0</mu1>
+      <mu2>0</mu2>
+    </gazebo>
+
+  </xacro:macro>
+
+
+</root>

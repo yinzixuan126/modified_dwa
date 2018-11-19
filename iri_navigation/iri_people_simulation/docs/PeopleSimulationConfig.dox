@@ -1,0 +1,12 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~robot" : \b [str] robot name min: , default: unknown, max: 
+- \b "~simulation_mode" : \b [int] Person simulation mode: 0 for normal mode: constant number of persons; 1 for people density growing min: 0, default: 0, max: 1
+- \b "~vis_mode" : \b [bool] Visualization markers are enabled or not min: False, default: False, max: True
+- \b "~remove_targets" : \b [bool] The simulation removes tagets once they get to their first destination min: False, default: False, max: True
+- \b "~number_persons" : \b [int] number of targets min: 0, default: 0, max: 5000
+- \b "~force_map_path" : \b [str] path to force map file min: , default: , max: 
+- \b "~destination_map_path" : \b [str] path to force map file min: , default: , max: 
+

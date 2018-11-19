@@ -1,0 +1,33 @@
+<!-- -->
+
+<launch>
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster"
+		args=" 0 0 0 0 0 0 /map /$(optenv ROBOT tibi)/base_link 100" />
+
+ 	<node name="map_server" 
+		pkg="map_server" 
+		type="map_server" 
+		args="$(find iri_akp_local_planner_companion)/maps/empty.yaml">
+			<param name="frame_id" value="/map" />			
+	</node>  
+
+
+  <node pkg="iri_people_simulation_companion"
+		type="iri_people_simulation_companion"
+		name="people_simulation_companion"
+		launch-prefix="xterm -e ddd --args"
+		output="screen">
+	    <param name="number_persons" value="40"/>
+        <param name="vis_mode" value="True"/>
+        <param name="robot" type="string" value="$(optenv ROBOT tibi)" />
+        <param name="destination_map_path" value="$(find iri_people_simulation_companion)/map/fme_open_destinations.txt" />
+<!-- 4_destinations.txt -->
+  </node>
+
+  <node pkg ="rviz" 
+        name="rviz" 
+        type="rviz" 
+        args="-d $(find iri_people_simulation_companion)/config/sim_vis.rviz" />
+
+
+</launch>

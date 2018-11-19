@@ -1,0 +1,107 @@
+/*! \mainpage people_prediction
+
+  \section Introduction 
+
+  \subsection Pre-Requisites
+
+  This package requires of the following libraries and packages
+	 - <A href="http://www.cmake.org">cmake</A>, a cross-platform build system.
+	 - <A href="http://www.doxygen.org">doxygen</a> and 
+	   <A href="http://www.graphviz.org">graphviz</a> to generate the documentation.
+         - stdc++, 
+	 .
+  
+  Under linux all of these utilities are available in ready-to-use packages.
+
+  Under MacOS most of the packages are available via <a href="http://www.finkproject.org/">fink</a>. <br>
+
+  \subsection Compilation
+
+  Just download this package, uncompress it, and execute
+   - cd build
+   - cmake ..
+   .
+  to generate the makefile and then
+   - make
+   .
+  to obtain the shared library (in this case called <em>iriutils.so</em>) and
+  also all the example programs.
+
+  The <em>cmake</em> only need to be executed once (make will automatically call
+  <em>cmake</em> if you modify one of the <em>CMakeList.txt</em> files).
+
+  To generate this documentation type
+       - make doc
+       .
+
+  The files in the <em>build</em> directory are genetated by <em>cmake</em>
+  and <em>make</em> and can be safely removed.
+  After doing so you will need to call cmake manually again.
+
+  \subsection Configuration
+
+  The default build mode is DEBUG. That is, objects and executables 
+  include debug information.
+
+  The RELEASE build mode optimizes for speed. To build in this mode
+  execute
+      - cmake .. -DCMAKE_BUILD_TYPE=RELEASE
+      .
+  The release mode will be kept until next time cmake is executed.
+
+  \subsection Installation
+
+  In order to be able to use the library, it it necessary to copy it into the system.
+  To do that, execute
+
+      - make install
+      .
+
+  as root and the shared libraries will be copied to <em>/usr/local/lib/iriutils</em> directory
+  and the header files will be copied to <em>/usr/local/include/iriutils</em> dierctory. At 
+  this point, the library may be used by any user.
+
+  To remove the library from the system, exceute
+      - make uninstall
+      .
+  as root, and all the associated files will be removed from the system.
+
+  \section Customization
+
+  To build a new application using these library, first it is necessary to locate if the library
+  has been installed or not using the following command
+
+      - FIND_PACKAGE(people_prediction REQUIRED)
+
+  In the case that the package is present, it is necessary to add the header files directory to
+  the include directory path by using
+
+      - INCLUDE_DIRECTORIES(${people_prediction_INCLUDE_DIR})
+
+  Finally, it is also nevessary to link with the desired libraries by using the following command
+
+      - TARGET_LINK_LIBRARIES(<executable name> ${people_prediction_LIBRARY})
+      .
+
+  \section License
+
+  This package is licensed under a  
+  <a href="http://www.gnu.org/licenses/lgpl.html">
+    LGPL 3.0 License</a>.
+
+  \section Disclaimer
+
+   This is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+
+ */

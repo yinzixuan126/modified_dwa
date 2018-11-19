@@ -1,0 +1,64 @@
+<!-- Launches wolf node from TNO october'14 dataset-->
+
+<launch>
+
+    <!-- User Args  -->
+    <arg name="bag_file_name" default="/home/jvallve/bags/TNO-dataset/106_all.bag" /> 
+    <arg name="model" default="$(find agv_description)/model/toyota_car_oct2014.xacro"/>
+    
+    <!-- Set use_sim_time parameter in the parameter server-->
+    <param name="use_sim_time" value="true" />
+    
+    <!--Play the rosbag -->
+    <!-- args="/tf:=/tf_old ... " is required to effectively remap tf when running tf_remap-->
+    <node pkg="rosbag"
+        type="play"
+        name="rosbag"
+        args="-d 1 -s 10 -r 1 --clock $(arg bag_file_name)">
+    </node>
+    
+    <!-- Run tf_remap's to match robot description frame names -->
+    <!-- rosrun tf tf_remap _mappings:='[{old: agv_base_link, new: agv_base_link_new},{old: agv_lidar0, new: agv_base_lidar0_new}]' -->
+<!--    <node 
+        pkg="tf"
+        type="tf_remap"
+        name="tf_remap"
+        output="screen"
+        args="_mappings:='[{old: base, new: agv_base_link},
+                           {old: ibeo1, new: agv_lidar0},{old: ibeo2, new: agv_lidar1},{old: ibeo3, new: agv_lidar2},
+                           {old: ibeo4, new: agv_lidar3},{old: ibeo5, new: agv_lidar4},{old: ibeo6, new: agv_lidar5}]'">
+    </node>-->
+
+    <!--WOLF-->
+    <node name="iri_wolf"
+        pkg="iri_wolf"
+        type="iri_wolf"
+        output="screen">
+        <param name="window_length" value="100"/>
+        <param name="segment_window_length" value="0.7"/>
+        <param name="min_window_points" value="5"/>
+        <param name="k_sigmas_ut" value="1"/>
+        <param name="draw_lines" value="false"/>
+        <param name="n_lasers" value="6"/>
+        <param name="laser_0_frame_name" value="agv_lidar0"/>
+        <param name="laser_1_frame_name" value="agv_lidar1"/>
+        <param name="laser_2_frame_name" value="agv_lidar2"/>
+        <param name="laser_3_frame_name" value="agv_lidar3"/>
+        <param name="laser_4_frame_name" value="agv_lidar4"/>
+        <param name="laser_5_frame_name" value="agv_lidar5"/>
+        <remap from="~odometry" to="/iri_ibeo_pointcloud_2_laserscan/odom"/>
+        <remap from="~laser_0" to="/iri_ibeo_pointcloud_2_laserscan/ibeo_1b_laserscan"/>
+        <remap from="~laser_1" to="/iri_ibeo_pointcloud_2_laserscan/ibeo_2b_laserscan"/>
+        <remap from="~laser_2" to="/iri_ibeo_pointcloud_2_laserscan/ibeo_3b_laserscan"/>
+        <remap from="~laser_3" to="/iri_ibeo_pointcloud_2_laserscan/ibeo_4b_laserscan"/>
+        <remap from="~laser_4" to="/iri_ibeo_pointcloud_2_laserscan/ibeo_5b_laserscan"/>
+        <remap from="~laser_5" to="/iri_ibeo_pointcloud_2_laserscan/ibeo_6b_laserscan"/>
+    </node>
+    
+    <!--RESULTS VISUALIZATION-->
+    <node name="rviz"
+        pkg="rviz"
+        type="rviz" 
+        args="-d $(find iri_wolf)/config/ibeo_wolf.rviz" />
+
+</launch>

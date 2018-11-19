@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<robot name="$(arg name)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/car/urdf.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/car/gazebo.gazebo" />
+  <xacro:car_gazebo car_name="$(arg name)"/>
+
+</robot>

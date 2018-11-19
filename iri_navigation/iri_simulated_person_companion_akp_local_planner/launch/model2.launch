@@ -1,0 +1,58 @@
+<!-- -->
+<launch>
+  <group ns="$(optenv ROBOT dabo)">
+   
+   <!-- <arg name="model" default="$(optenv ROBOT dabo)"/> -->
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find tibi_dabo_description)/urdf/$(optenv ROBOT dabo).xacro'"/>
+    <node pkg ="robot_state_publisher"
+          type="state_publisher"
+          name="robot_state_publisher2">
+        <param name="tf_prefix" value="$(optenv ROBOT dabo)" type="str" />
+      </node>
+  <arg name="x"     default="0.0"/>
+  <arg name="y"     default="0.0"/>
+  <arg name="yaw"   default="0.0"/>
+  <arg name="model" default="$(optenv ROBOT dabo)"/>
+
+    <node pkg ="tf" 
+          type="static_transform_publisher" 
+          name="head_pan2"
+          args="0.01722 0 0.025 0 0 0 /$(optenv ROBOT dabo)/neck1 /$(optenv ROBOT dabo)/neck2 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher" 
+          name="head_tilt2" 
+          args="0 0 0.051 -1.5707963 0 -1.5707963 /$(optenv ROBOT dabo)/neck2 /$(optenv ROBOT dabo)/neck3 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher"
+          name="head_roll2"
+          args="0 -0.045 0 -1.5707963 0 -1.5707963 /$(optenv ROBOT dabo)/neck3 /$(optenv ROBOT dabo)/head 100"/>
+
+    <node pkg ="tf" 
+          type="static_transform_publisher" 
+          name="left_arm_pan2"
+          args="0.0 0.0 0.023 0.0  0.0 0.0 /$(optenv ROBOT dabo)/left_shoulder_base  /$(optenv ROBOT dabo)/left_shoulder2 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher"
+          name="left_arm_tilt2"
+          args="0.0 0.0 0.0435 0.0 -1.5707963 0.0 /$(optenv ROBOT dabo)/left_shoulder2  /$(optenv ROBOT dabo)/left_arm 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher" 
+          name="right_arm_pan2"
+          args="0.0  0.0  0.023  0.0  0.0  0.0 /$(optenv ROBOT dabo)/right_shoulder_base /$(optenv ROBOT dabo)/right_shoulder2 100"/>
+
+    <node pkg ="tf"
+          type="static_transform_publisher"
+          name="right_arm_tilt2"
+          args="0.0  0.0  0.0435 0.0 -1.5707963  0.0 /$(optenv ROBOT dabo)/right_shoulder2 /$(optenv ROBOT dabo)/right_arm 100"/>
+   
+  <node name="spawn_urdf_$(optenv ROBOT dabo)"
+          pkg ="gazebo_ros" 
+          type="spawn_model"
+          args="-param /$(optenv ROBOT dabo)/robot_description -urdf -model $(optenv ROBOT dabo) -x $(arg x) -y $(arg y) -Y $(arg yaw)">
+    </node> 
+ </group>
+</launch>

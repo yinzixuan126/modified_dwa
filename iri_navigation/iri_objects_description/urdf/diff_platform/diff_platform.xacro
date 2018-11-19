@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iri_objects_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find iri_objects_description)/urdf/diff_platform/include/platform.xacro" />
+
+  <xacro:diff_platform name="robot"/>
+
+</robot>

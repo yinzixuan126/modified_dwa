@@ -1,0 +1,123 @@
+<!-- -->
+<launch>
+
+  <arg name="world" default="empty"/>
+
+  <include file="$(find iri_objects_description)/launch/world.launch">
+    <arg name="world" value="$(arg world)"/>
+    <arg name="gui"          value="false"/>
+  </include>
+
+  <!-- models -->
+  <include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person1"/>
+    <arg name="type" value="person"/>
+    <arg name="x"     value="-10.0"/>
+    <arg name="y"     value="-10.0"/>
+    <arg name="yaw"   value="0.0"/>
+  </include>
+  
+  <include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person2"/>
+    <arg name="type" value="person_with_face"/>
+    <arg name="x"     value="-12.0"/>
+    <arg name="y"     value="-10.0"/>
+    <arg name="yaw"   value="0.0"/>
+  </include>
+  
+  <include file="$(find iri_objects_description)/launch/spawn_person.launch">
+    <arg name="name" value="person3"/>
+    <arg name="type" value="person_with_tags"/>
+    <arg name="x"     value="-14.0"/>
+    <arg name="y"     value="-10.0"/>
+    <arg name="yaw"   value="0.0"/>
+  </include>
+  
+  <include file="$(find iri_objects_description)/launch/spawn_cylinder.launch">
+    <arg name="name" value="cylinder1"/>
+    <arg name="x"     value="-10.0"/>
+    <arg name="y"     value="-6.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="height" value="2.0"/>
+    <arg name="radius" value="0.3"/>
+  </include>
+  
+  <include file="$(find iri_objects_description)/launch/spawn_cylinder.launch">
+    <arg name="name" value="cylinder2"/>
+    <arg name="x"     value="-14.0"/>
+    <arg name="y"     value="-6.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="height" value="5.0"/>
+    <arg name="radius" value="1.0"/>
+  </include>
+
+  <include file="$(find iri_objects_description)/launch/spawn_box.launch">
+    <arg name="name" value="box1"/>
+    <arg name="x"     value="-10.0"/>
+    <arg name="y"     value="-2.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="length" value="1.0"/>
+    <arg name="width"  value="1.0"/>
+    <arg name="height" value="2.0"/>
+  </include>
+
+  <include file="$(find iri_objects_description)/launch/spawn_box.launch">
+    <arg name="name" value="box2"/>
+    <arg name="x"     value="-14.0"/>
+    <arg name="y"     value="-2.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="length" value="3.0"/>
+    <arg name="width"  value="4.0"/>
+    <arg name="height" value="5.0"/>
+  </include>
+
+  <include file="$(find iri_objects_description)/launch/spawn_car.launch">
+    <arg name="name" value="car1"/>
+    <arg name="x"     value="-10.0"/>
+    <arg name="y"     value="2.0"/>
+    <arg name="yaw"   value="0.0"/>
+  </include>
+
+  <include file="$(find iri_objects_description)/launch/spawn_box.launch">
+    <arg name="name" value="container1"/>
+    <arg name="x"     value="-10.0"/>
+    <arg name="y"     value="8.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="length" value="12.0"/>
+    <arg name="width"  value="2.4"/>
+    <arg name="height" value="2.9"/>
+  </include>
+
+  <include file="$(find iri_objects_description)/launch/spawn_truck.launch">
+    <arg name="name" value="truck1"/>
+    <arg name="x"     value="-10.0"/>
+    <arg name="y"     value="14.0"/>
+    <arg name="yaw"   value="0.0"/>
+  </include>
+  
+  <!-- sensors -->
+  <include file="$(find iri_objects_description)/launch/spawn_camera.launch">
+    <arg name="name" value="camera1"/>
+    <arg name="x"     value="5.0"/>
+    <arg name="y"     value="0.0"/>
+    <arg name="yaw"   value="3.1416"/>
+  </include>
+  
+  <include file="$(find iri_objects_description)/launch/spawn_velodyne.launch">
+    <arg name="name" value="velodyne1"/>
+    <arg name="x"     value="0.0"/>
+    <arg name="y"     value="2.0"/>
+    <arg name="yaw"   value="0.0"/>
+  </include>
+  
+  <include file="$(find iri_objects_description)/launch/spawn_object.launch">
+    <arg name="name" value="laser1"/>
+    <arg name="x"     value="0.0"/>
+    <arg name="y"     value="-2.0"/>
+    <arg name="yaw"   value="0.0"/>
+    <arg name="model" value="laser/laser_standalone.xacro"/>
+  </include>
+
+  <node name="rviz" pkg ="rviz" type="rviz" args="-d $(find iri_objects_description)/rviz/test.rviz"/>
+  
+</launch>

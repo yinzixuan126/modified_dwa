@@ -1,0 +1,22 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="empty"/>
+
+  <!-- Map Server -->
+  <!-- published topics: /$(optenv ROBOT tibi)/map -->
+  <!-- subscribed topics: -->
+  <!-- service clients: -->
+  <!-- service servers: -->
+  <!-- action clients: -->
+  <!-- action servers: -->
+  <node name="$(optenv ROBOT tibi)_map_server" 
+        pkg ="map_server" 
+        type="map_server" 
+        args="$(find iri_akp_local_planner)/maps/$(arg map).yaml">
+     <param name="frame_id" value="/map" />
+     <remap from="/map"
+              to="$(optenv ROBOT tibi)/map"/>
+  </node>
+  
+</launch>

@@ -1,0 +1,45 @@
+<!-- -->
+<launch>
+
+  <arg name="world" default="brl_small"/>
+  <!-- empty , gas_station, fme_closed_door, fme_opened_door, brl_small, brl_big -->
+
+  <include file="$(find tibi_dabo_gazebo)/launch/include/world.launch.xml">
+    <arg name="world" value="$(arg world)"/>
+  </include>
+  
+  <include file="$(find tibi_dabo_gazebo)/launch/include/robot.launch.xml">
+    <arg name="robot" value="$(env ROBOT)"/>
+    <arg name="x"     value="0.0"/>
+    <arg name="y"     value="0.0"/>
+    <arg name="yaw"   value="0.0"/>
+  </include>
+
+  
+  <include file="$(find tibi_dabo_gazebo)/launch/include/person.launch.xml">
+    <arg name="name" value="person1"/>
+    <arg name="x"    value="3.0"/>
+    <arg name="y"    value="0.0"/>
+    <arg name="z"    value="0.0"/>
+    <arg name="yaw"  value="0.0"/>
+  </include>
+
+  <!--<include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_fake_localization.launch"/> -->
+  <include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_amcl.launch"/>s
+
+  <include file="$(find tibi_dabo_rosnav)/launch/tibi_dabo_map_server.launch">
+    <arg name="map" value="/sim/$(arg world)" />
+  </include>
+  
+  <include file="$(find iri_laser_people_detection)/launch/tibi_dabo_lpd_map.launch"/>
+  <include file="$(find iri_laser_people_map_filter)/launch/tibi_dabo_laser_people_map_filter.launch"/>
+  <include file="$(find iri_people_tracking_mht)/launch/tibi_dabo_mht_map.launch"/>
+
+  <include file="$(find iri_akp_local_planner_companion)/launch/tibi_dabo_akp.launch">
+    <arg name="map" value="$(arg world)"/>
+  </include>
+
+  <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui" machine="monitor"/>
+  <node name="rviz" pkg ="rviz" type="rviz" machine="monitor" args="-d $(find iri_akp_local_planner_companion)/rviz/$(env ROBOT).rviz"/>
+
+</launch>

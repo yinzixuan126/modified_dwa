@@ -1,0 +1,47 @@
+<!-- -->
+<launch>
+
+  <arg name="map" default="2" />
+
+  <!-- load robot defined machines -->
+  <include file="$(find tibi_dabo_base)/machines/$(optenv ROBOT tibi)_$(env ROS_MODE).machines" />
+  <rosparam command="delete" ns="/$(optenv ROBOT tibi)/move_base" />
+
+  <group ns="$(optenv ROBOT tibi)"> 
+
+    <!--launch-prefix="xterm -e ddd -args" -->
+    <node pkg ="move_base"
+          type="move_base"
+          name="move_base2"
+          machine="nav"
+          output="screen">
+      <remap from="/$(optenv ROBOT tibi)/cmd_vel"
+              to="/$(optenv ROBOT tibi)/navigation/cmd_vel2" />
+      <remap from="/$(optenv ROBOT tibi)/odom"
+              to="/$(optenv ROBOT tibi)/segway/odom" />
+      <remap from="/$(optenv ROBOT tibi)/front_scan"
+              to="/$(optenv ROBOT tibi)/sensors/front_laser_scan" />
+      <remap from="/$(optenv ROBOT tibi)/rear_scan"
+              to="/$(optenv ROBOT tibi)/sensors/rear_laser_scan" />
+      <remap from="/$(optenv ROBOT tibi)/tracks"
+               to="/$(optenv ROBOT tibi)/mht/tracks" />
+      <remap from="/$(optenv ROBOT tibi)/move_base2/goal"
+               to="/$(optenv ROBOT tibi)/move_base/goal" />
+      <remap from="/$(optenv ROBOT tibi)/planner_markers"
+               to="/$(optenv ROBOT tibi)/planner_markers2" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/move_base_params.yaml"      command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/local_costmap_params.yaml"  command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find iri_akp_local_planner_companion)/config/$(optenv ROBOT tibi)/akp_local_planner_params.yaml" command="load" />
+      <!--<param name="AkpLocalPlanner/force_map_path"       value="$(find iri_akp_local_planner)/maps/$(arg map)_forces.txt" />-->
+      <param name="AkpLocalPlanner/destination_map_path" value="$(find iri_akp_local_planner_companion)/maps/$(arg map)_destinations.txt" />
+      <param name="AkpLocalPlanner/results_filename" value="$(env HOME)/iri-lab/labrobotica/restricted/algorithms/people_prediction/branches/ely_people_prediction_companion_robot/data_results/results_robot.txt" />
+      <param name="AkpLocalPlanner/debug_filename" value="$(env HOME)/iri-lab/labrobotica/restricted/algorithms/people_prediction/branches/ely_people_prediction_companion_robot/data_results/debug_robot.txt" />
+      <param name="AkpLocalPlanner/robot" value="$(optenv ROBOT tibi)"/>
+    </node>
+
+  </group>
+
+</launch>

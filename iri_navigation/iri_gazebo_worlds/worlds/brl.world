@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="brl">
+    <physics type="ode">
+      <max_step_size>0.001</max_step_size>
+      <gravity>0 0 -9.8</gravity>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <min_step_size>0.001</min_step_size>
+          <iters>500</iters>
+        </solver>
+      </ode>
+    </physics>
+    <model name="brl_map">
+      <static>true</static>
+      <link name="brl_map_link">
+        <collision name="brl_map_collision">
+          <geometry>
+            <mesh>
+              <uri>file:///home/fherrero/iri-lab/iri_ws/src/iri_navigation/iri_gazebo_worlds/models/meshes/brl.dae</uri>
+              <scale>10000 10000 10000</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <visual name="brl_map_visual"> 
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <mesh>
+              <scale>10000 10000 10000</scale>
+              <uri>file:///home/fherrero/iri-lab/iri_ws/src/iri_navigation/iri_gazebo_worlds/models/meshes/brl.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+    <include>
+       <uri>model://sun</uri>
+    </include>
+  </world>
+</sdf>

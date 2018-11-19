@@ -1,0 +1,16 @@
+<!-- -->
+<launch>
+
+  <!-- iri platform teleop -->
+  <!-- published topics: /teleop/cmd_vel -->
+  <!-- subscribed topics: /teleop/joy -->
+  <!-- service clients: -->
+  <!-- service servers: -->
+  <!-- action clients: -->
+  <!-- action servers: -->
+  <node pkg="iri_platform_teleop"
+        type="iri_platform_teleop"
+        name="teleop"
+        output="screen">
+  </node>
+</launch>

@@ -1,0 +1,14 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~match_area_x" : \b [double] Matching area for loop closure (x) min: 0.0, default: 3.0, max: inf
+- \b "~match_area_y" : \b [double] Matching area for loop closure (y) min: 0.0, default: 3.0, max: inf
+- \b "~match_area_th" : \b [double] Matching area for loop closure (theta) min: 0.0, default: 0.2617994, max: inf
+- \b "~pd_range_1" : \b [double] Prob. threshold for try loop closure min: 0.0, default: 0.1, max: 1.0
+- \b "~pd_range_2" : \b [double] Prob. threshold for redundant pose min: 0.0, default: 0.9, max: 1.0
+- \b "~ig_range_1" : \b [double] Information gain threshold for redundant pose min: 0.0, default: 7.0, max: inf
+- \b "~ig_range_2" : \b [double] Information gain threshold for try loop closure min: 0.0, default: 9.0, max: inf
+- \b "~ignore_previous_steps" : \b [int] Number of previous steps to ignore in loop closure min: 1, default: 1, max: 2147483647
+- \b "~K_mahalanobis" : \b [double] Mahalanobis distance in the outlier detection in loop closure min: 0.0, default: 3.3682, max: inf
+
